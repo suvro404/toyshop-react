@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/toyshop-live/static/css/main.a1e53ff5.chunk.css",
+    "main.js": "/toyshop-live/static/js/main.16557eb2.chunk.js",
+    "main.js.map": "/toyshop-live/static/js/main.16557eb2.chunk.js.map",
+    "runtime-main.js": "/toyshop-live/static/js/runtime-main.b1c3e09e.js",
+    "runtime-main.js.map": "/toyshop-live/static/js/runtime-main.b1c3e09e.js.map",
+    "static/js/2.d1fd8ce0.chunk.js": "/toyshop-live/static/js/2.d1fd8ce0.chunk.js",
+    "static/js/2.d1fd8ce0.chunk.js.map": "/toyshop-live/static/js/2.d1fd8ce0.chunk.js.map",
+    "static/js/3.e0d46132.chunk.js": "/toyshop-live/static/js/3.e0d46132.chunk.js",
+    "static/js/3.e0d46132.chunk.js.map": "/toyshop-live/static/js/3.e0d46132.chunk.js.map",
+    "index.html": "/toyshop-live/index.html",
+    "static/css/main.a1e53ff5.chunk.css.map": "/toyshop-live/static/css/main.a1e53ff5.chunk.css.map",
+    "static/js/2.d1fd8ce0.chunk.js.LICENSE.txt": "/toyshop-live/static/js/2.d1fd8ce0.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b1c3e09e.js",
+    "static/js/2.d1fd8ce0.chunk.js",
+    "static/css/main.a1e53ff5.chunk.css",
+    "static/js/main.16557eb2.chunk.js"
+  ]
+}
