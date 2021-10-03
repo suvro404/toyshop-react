@@ -1,0 +1,10 @@
+.App {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
