@@ -12,7 +12,6 @@ import {ProductsContextProvider} from "./context/ProductsContextApi";
 
 function App() {
       const productType = "all";
-
       return (
           <ProductsContextProvider productType = {productType}>
               <Router>
