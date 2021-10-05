@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import '../assets/styles/ProductList.css'
+import '../assets/styles/ProductList.css';
 
 
 function ProductList(props) {

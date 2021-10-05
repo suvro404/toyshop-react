@@ -4,12 +4,12 @@ import '../assets/styles/Product.css'
 import LoadingSpinner from "../components/LoadingSpinner";
 
 function Product(props) {
-    useEffect(() => {
-        fetchProduct();
-    }, []);
-
     const [product, setProduct] = useState({});
     let [loading, setLoadingStatus] = useState(false);
+
+    useEffect(() => {
+        fetchProduct();
+    });
 
     const fetchProduct = async () => {
         setLoadingStatus(true);
