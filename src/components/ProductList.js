@@ -1,7 +1,6 @@
 import { useHistory } from "react-router-dom";
 import '../assets/styles/ProductList.css';
 
-
 function ProductList(props) {
     const history = useHistory();
 
