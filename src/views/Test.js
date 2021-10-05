@@ -1,4 +1,3 @@
-
 import ProductList from "../components/ProductList";
 import LoadingSpinner from "../components/LoadingSpinner";
 import {useProductsApi} from "../context/ProductsContextApi";
