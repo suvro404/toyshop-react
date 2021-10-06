@@ -1,0 +1,112 @@
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1000;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+
+.modal-content-container {
+    background-color: #3A3451;
+    margin: auto;
+    padding: 20px;
+    width: 40%;
+    border-radius: 15px;
+}
+
+/*.modal-content {*/
+/*    flex-flow: row wrap;*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*    align-items: center;*/
+/*}*/
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cart-product-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid rgba(163, 159, 177, 0.1);
+}
+
+.product-title {
+    color: #e3dbdb;
+}
+
+.modal-action-button {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+}
+
+.modal-action-button:nth-child(1) {
+    background: #2f2c3b;
+    color: #9BC90D;
+}
+
+.modal-action-button:nth-child(2) {
+    background: #3A3451;
+    color: #e3dbdb;
+}
+
+.purchase-table {
+    border-collapse: collapse;
+    border-radius: 10px;
+    background: #312b47;
+    margin: 10px 10px 30px 10px;
+}
+
+.purchase-table th, .purchase-table td {
+    padding: 20px;
+}
+
+.purchase-table-btn {
+    margin: 0px 5px;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    background: #9bc90d;
+    color: black;
+    font-weight: bold;
+    border: none;
+}
+
+.modal-action-button, .purchase-table-btn {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+    .modal-content-container {
+        width: 80% !important;
+    }
+    .purchase-table th, .purchase-table td {
+        padding: 10px;
+    }
+    .purchase-table-btn {
+        margin: 5px;
+        border-radius: 5px;
+        width: 20px;
+        height: 20px;
+    }
+}
