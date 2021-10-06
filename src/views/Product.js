@@ -9,7 +9,6 @@ function Product(props) {
     const [loading, setLoadingStatus] = useState(false);
     const [modalShow, setModalShow] = useState(false);
 
-
     useEffect(() => {
         fetchProduct();
     }, []);

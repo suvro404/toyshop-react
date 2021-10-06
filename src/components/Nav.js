@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {Link, useLocation } from "react-router-dom";
 import '../assets/styles/Nav.css';
+import {useCart} from "../context/CartContext";
 
 
 function Nav() {
@@ -25,6 +26,9 @@ function Nav() {
         }
     }, [])
 
+
+    const {cart, setCart} = useCart();
+
     return (
         <nav className={ transparentBg ? 'bg-transparent' : 'bg-regular' }>
             <div className="logo">
@@ -48,7 +52,7 @@ function Nav() {
                 </Link>
                 <Link to='/cart' className="link-name">
                     <li className={ isCurrentRoute('/cart') ? 'active' : 'in-active' }>
-                        Cart
+                        Cart{cart.length > 0 && <sup>{cart.length}</sup>}
                     </li>
                 </Link>
             </ul>
