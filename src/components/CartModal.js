@@ -7,7 +7,6 @@ function CartModal(props) {
     const [noOfItems, setNoOfItems] = useState(1);
     let totalPrice = noOfItems * Number(props.product.item.cost);
 
-
     function closeModal() {
         props.onClose();
     }
@@ -19,38 +18,35 @@ function CartModal(props) {
             totalPrice: getGrossPrice(cart, props.product, totalPrice)
         }
 
-        //useCart(cartProduct, 'add');
-        //setCart([cartProduct]);
-
         updateCart(cart, cartProduct);
 
-        props.onClose();
+        closeModal();
     }
 
-    function updateCart(cart, product) {
-        cart = JSON.parse(JSON.stringify(cart));
-        //let tempCart = cart.map(object => ({ ...object }));
+    async function updateCart(currentCart, productToAdd) {
+        currentCart = JSON.parse(JSON.stringify(currentCart));
 
-        if(cart.length) {
-            cart.forEach((p, idx) => {
-                if(p.product.itemId === product.product.itemId) {
-                    cart.splice(idx, 1, product);
-                } else {
-                    cart.push(product);
-                }
-            });
-        } else {
-            cart.push(product);
-        }
+        productExists(currentCart, productToAdd) ?
+            currentCart.splice(getIndexOfExistingProduct(currentCart, productToAdd), 1, productToAdd)
+            : currentCart.push(productToAdd);
 
-        setCart(cart);
+        setCart(currentCart);
     }
 
+    function productExists(cart, product) {
+        return cart.filter(p => {
+            return (p.product.itemId === product.product.itemId);
+        }).length > 0;
+    }
+
+    function getIndexOfExistingProduct(cart, product) {
+        return cart.findIndex(p => p.product.itemId === product.product.itemId);
+    }
 
     function getProductQuantity(cart, product, noOfItems) {
         let totalQuantity = 0;
         cart.forEach((p) => {
-            totalQuantity = (p.itemId == product.itemId ? (totalQuantity + noOfItems) : noOfItems);
+            totalQuantity = (p.itemId === product.itemId ? (totalQuantity + noOfItems) : noOfItems);
         });
         return totalQuantity;
     }
@@ -58,7 +54,7 @@ function CartModal(props) {
     function getGrossPrice(cart, product, totalPrice) {
         let grossPrice = 0;
         cart.forEach((p) => {
-            grossPrice = (p.itemId == product.itemId ? (grossPrice + totalPrice) : totalPrice);
+            grossPrice = (p.itemId === product.itemId ? (grossPrice + totalPrice) : totalPrice);
         });
         return grossPrice;
     }

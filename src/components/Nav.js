@@ -52,7 +52,7 @@ function Nav() {
                 </Link>
                 <Link to='/cart' className="link-name">
                     <li className={ isCurrentRoute('/cart') ? 'active' : 'in-active' }>
-                        Cart{cart.length > 0 && <sup>{cart.length}</sup>}
+                        Cart{cart && cart.length > 0 && <sup>{cart.length}</sup>}
                     </li>
                 </Link>
             </ul>
