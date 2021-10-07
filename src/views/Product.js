@@ -3,11 +3,17 @@ import {FetchItems} from "../helpers/basic-helpers"
 import '../assets/styles/Product.css'
 import LoadingSpinner from "../components/LoadingSpinner";
 import CartModal from "../components/CartModal";
+import {useAuth} from "../context/AuthContext"
+import WarningModal from "../components/WarningModal";
+import {useHistory} from "react-router-dom";
 
 function Product(props) {
     const [product, setProduct] = useState({});
     const [loading, setLoadingStatus] = useState(false);
     const [modalShow, setModalShow] = useState(false);
+    const [warningModalShow, setWarningModalShow] = useState(false);
+    const {authorized, setAuthorized} = useAuth();
+    const history = useHistory();
 
     useEffect(() => {
         fetchProduct();
@@ -23,10 +29,15 @@ function Product(props) {
     }
 
     const openModal = () => {
-        setModalShow(true);
+        authorized ? (setModalShow(true)) : (setWarningModalShow(true));
     };
     const closeModal = ()=>{
         setModalShow(false);
+    }
+
+    const closeWarningModal = () => {
+        setWarningModalShow(false);
+        history.push('/auth');
     }
 
     return (
@@ -86,6 +97,7 @@ function Product(props) {
                                     </div>
                                 </div>
                                 {modalShow && <CartModal onClose={closeModal} product={product} />}
+                                {warningModalShow && <WarningModal onClose={closeWarningModal} />}
                             </div>
                     ): (
                         <div>No product to show</div>

@@ -16,7 +16,7 @@ import {AuthContextProvider} from "./context/AuthContext"
 function App() {
     const productType = "all";
     const cartList = [];
-    const authorized = true;
+    const authorized = false;
 
     return (
         <AuthContextProvider status = {authorized}>
