@@ -5,10 +5,14 @@ import {useCart} from "../context/CartContext";
 function CartModal(props) {
     const {cart, setCart} = useCart();
     const [noOfItems, setNoOfItems] = useState(1);
-    let totalPrice = noOfItems * Number(props.product.item.cost);
+    let totalPrice = noOfItems * getProductPrice(props.product.item.cost);
 
     function closeModal() {
         props.onClose();
+    }
+
+    function getProductPrice(price) {
+        return Number(price) > 0 ? Number(price) : 100;
     }
 
     function confirm() {

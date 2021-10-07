@@ -2,11 +2,12 @@ import '../assets/styles/Cart.css'
 import {useCart} from "../context/CartContext";
 import CheckoutModal from "../components/CheckoutModal";
 import {useState} from "react";
+import { useHistory } from "react-router-dom";
 
 
 function Cart() {
+    const history = useHistory();
     const {cart, setCart} = useCart();
-    //console.log("cart : ", cart);
     const [modalShow, setModalShow] = useState(false);
 
     function removeProductFromCart(product) {
@@ -27,6 +28,8 @@ function Cart() {
 
     function closeModal () {
         setModalShow(false);
+        setCart([]);
+        history.push('/');
     }
 
     function getFinalPrice() {
