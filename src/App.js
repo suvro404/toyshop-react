@@ -16,10 +16,10 @@ import {AuthContextProvider} from "./context/AuthContext"
 function App() {
     const productType = "all";
     const cartList = [];
-    const authStatus = "authorized";
+    const authorized = true;
 
     return (
-        <AuthContextProvider status = {authStatus}>
+        <AuthContextProvider status = {authorized}>
             <ProductsContextProvider productType = {productType}>
                 <CartContextProvider cartList = {cartList}>
                     <Router>

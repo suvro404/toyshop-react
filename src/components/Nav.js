@@ -8,9 +8,9 @@ function Nav() {
     const loc = useLocation();
     const [transparentBg, setTransparentBg] = useState(true);
     const {cart, setCart} = useCart();
-    const {authStatus, setAuthStatus} = useAuth();
+    const {authorized, setAuthorized} = useAuth();
 
-    //console.log("authStatus : ", authStatus);
+    //console.log("authorized : ", authorized);
 
     function isCurrentRoute(route) {
         return (route === loc.pathname ? true : false);
@@ -52,18 +52,21 @@ function Nav() {
                         Upcoming
                     </li>
                 </Link>
-                <Link to='/cart' className="link-name">
-                    <li className={ isCurrentRoute('/cart') ? 'active' : 'in-active' }>
-                        Cart{cart && cart.length > 0 && <sup>{cart.length}</sup>}
-                    </li>
-                </Link>
+
                 {
-                    authStatus === 'authorized' ? (
-                        <Link to='/'>
-                            <li className='in-active'>
-                                Log Out
-                            </li>
-                        </Link>
+                    authorized ? (
+                        <div className="link-group">
+                            <Link to='/cart' className="link-name">
+                                <li className={ isCurrentRoute('/cart') ? 'active' : 'in-active' }>
+                                    Cart{cart && cart.length > 0 && <sup>{cart.length}</sup>}
+                                </li>
+                            </Link>
+                            <Link to='/' className="link-name">
+                                <li className='in-active' onClick={() => setAuthorized(false)}>
+                                    Log Out
+                                </li>
+                            </Link>
+                        </div>
                     ):(
                         <Link to='/auth' className="link-name">
                             <li className={ isCurrentRoute('/auth') ? 'active' : 'in-active' }>

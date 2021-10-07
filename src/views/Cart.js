@@ -4,7 +4,6 @@ import CheckoutModal from "../components/CheckoutModal";
 import {useState} from "react";
 import { useHistory } from "react-router-dom";
 
-
 function Cart() {
     const history = useHistory();
     const {cart, setCart} = useCart();

@@ -11,6 +11,30 @@ nav {
     transition: background 200ms linear;
 }
 
+.nav-links {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+}
+
+.link-name {
+    text-decoration: none;
+    width: 20%;
+}
+
+.link-group {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 40%;
+}
+
+.link-group > .link-name {
+    width: 50%;
+}
+
 .bg-transparent {
     background: transparent;
 }
@@ -26,16 +50,6 @@ nav {
 }
 .highlighted {
     color: #ffc800;
-}
-.nav-links {
-    width: 30%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    list-style: none;
-}
-.link-name {
-    text-decoration: none;
 }
 
 .active {
