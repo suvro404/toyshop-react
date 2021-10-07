@@ -55,6 +55,11 @@ function Nav() {
                         Cart{cart && cart.length > 0 && <sup>{cart.length}</sup>}
                     </li>
                 </Link>
+                <Link to='/auth' className="link-name">
+                    <li className={ isCurrentRoute('/auth') ? 'active' : 'in-active' }>
+                        Log In
+                    </li>
+                </Link>
             </ul>
         </nav>
     );
