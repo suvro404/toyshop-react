@@ -2,15 +2,20 @@ import { useEffect, useState } from 'react'
 import {Link, useLocation } from "react-router-dom";
 import '../assets/styles/Nav.css';
 import {useCart} from "../context/CartContext";
-
+import {useAuth} from "../context/AuthContext"
 
 function Nav() {
     const loc = useLocation();
+    const [transparentBg, setTransparentBg] = useState(true);
+    const {cart, setCart} = useCart();
+    const {authStatus, setAuthStatus} = useAuth();
+
+    //console.log("authStatus : ", authStatus);
+
     function isCurrentRoute(route) {
         return (route === loc.pathname ? true : false);
     }
 
-    const [transparentBg, setTransparentBg] = useState(true);
     const changeNavBgColor = () => {
         if (window.scrollY > 50) {
             setTransparentBg(false);
@@ -25,9 +30,6 @@ function Nav() {
             window.removeEventListener('scroll', changeNavBgColor)
         }
     }, [])
-
-
-    const {cart, setCart} = useCart();
 
     return (
         <nav className={ transparentBg ? 'bg-transparent' : 'bg-regular' }>
@@ -55,11 +57,22 @@ function Nav() {
                         Cart{cart && cart.length > 0 && <sup>{cart.length}</sup>}
                     </li>
                 </Link>
-                <Link to='/auth' className="link-name">
-                    <li className={ isCurrentRoute('/auth') ? 'active' : 'in-active' }>
-                        Log In
-                    </li>
-                </Link>
+                {
+                    authStatus === 'authorized' ? (
+                        <Link to='/'>
+                            <li className='in-active'>
+                                Log Out
+                            </li>
+                        </Link>
+                    ):(
+                        <Link to='/auth' className="link-name">
+                            <li className={ isCurrentRoute('/auth') ? 'active' : 'in-active' }>
+                                Log In
+                            </li>
+                        </Link>
+                    )
+                }
+
             </ul>
         </nav>
     );

@@ -30,15 +30,15 @@ function Auth() {
                             <div className="auth-msg">
                                 Don't have an account? Please
                                 <span className="auth-highlighted-text" onClick={() => changeAuthType('Sign Up')}>
-                            Sign Up
-                        </span>
+                                    Sign Up
+                                </span>
                             </div>
                         ):(
                             <div className="auth-msg">
                                 Already have an account? Please
                                 <span className="auth-highlighted-text" onClick={() => changeAuthType('Log In')}>
-                            Log In
-                        </span>
+                                    Log In
+                                </span>
                             </div>
                         )
                     }

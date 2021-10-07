@@ -35,6 +35,7 @@
     background: #4848b0;
     color: #eee3e3;
     cursor: pointer;
+    letter-spacing: 1px;
 }
 .auth-msg {
     font-size: 0.8rem;
