@@ -1,10 +1,37 @@
 import '../assets/styles/Cart.css'
 import {useCart} from "../context/CartContext";
+import CheckoutModal from "../components/CheckoutModal";
+import {useState} from "react";
+
 
 function Cart() {
     const {cart, setCart} = useCart();
-    console.log("cart : ", cart);
+    //console.log("cart : ", cart);
+    const [modalShow, setModalShow] = useState(false);
 
+    function removeProductFromCart(product) {
+        let currentCart = JSON.parse(JSON.stringify(cart));
+
+        currentCart.splice(getPositionOfProductInCart(currentCart, product), 1);
+
+        setCart(currentCart);
+    }
+
+    function getPositionOfProductInCart(cart, product) {
+        return cart.findIndex(p => p.product.itemId === product.itemId);
+    }
+
+    function checkOut() {
+        setModalShow(true);
+    }
+
+    function closeModal () {
+        setModalShow(false);
+    }
+
+    function getFinalPrice() {
+        return cart.reduce((sum, p) => sum + p.totalPrice, 0);
+    }
 
     return (
         <div className="flex-container">
@@ -35,11 +62,8 @@ function Cart() {
                                             <td>
                                                 {product.totalPrice}
                                             </td>
-                                            <td className="cart-table-btn-container">
-                                                <button className="cart-table-btn">
-                                                    ADD
-                                                </button>
-                                                <button className="cart-table-btn">
+                                            <td>
+                                                <button className="cart-table-btn" onClick={() => removeProductFromCart(product.product)}>
                                                     REMOVE
                                                 </button>
                                             </td>
@@ -47,8 +71,14 @@ function Cart() {
                                     )
                                 })
                             }
-                            <tr>
-
+                            <tr className="final-result-row">
+                                <td colSpan="2">Total</td>
+                                <td>{getFinalPrice()}</td>
+                                <td className="btn-container">
+                                    <button className="cart-table-btn checkout-btn" onClick={() => checkOut()}>
+                                        CHECKOUT
+                                    </button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -59,6 +89,9 @@ function Cart() {
                     </div>
                 )
             }
+            <div>
+                {modalShow && <CheckoutModal  onClose={closeModal} />}
+            </div>
         </div>
     );
 }

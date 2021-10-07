@@ -24,7 +24,7 @@
 
 .cart-table tr {
     width: 60vw !important;
-    border: 1px solid green;
+    //border: 1px solid green;
 }
 
 .cart-table th {
@@ -32,7 +32,7 @@
 }
 
 .cart-table th, .cart-table td {
-    padding: 20px 0px 0px 0px;
+    padding: 20px 0px 20px 0px;
 }
 
 .cart-table th:nth-child(1), .cart-table td:nth-child(1) {
@@ -44,17 +44,39 @@
     text-align: right;
     padding-right: 20px;
 }
+.final-result-row {
+    border-top: 1px solid rgba(108, 245, 66, 0.2);
+}
+
+
+.btn-container {
+    text-align: right;
+    padding-right: 20px !important;
+}
 
 .cart-table-btn {
-    margin: 0px 5px;
-    border-radius: 5px;
-    /*width: 30px;*/
-    /*height: 30px;*/
-    padding: 5px 10px;
     background: #9bc90d;
     color: black;
+}
+
+.checkout-btn {
+    background: #4848b0;
+    color: #eee3e3;
+}
+
+.final-result-row td {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #e7946d;
+}
+
+.cart-table-btn, .checkout-btn {
+    margin: 0px 5px;
+    border-radius: 5px;
+    padding: 5px 10px;
     font-weight: bold;
     border: none;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {
