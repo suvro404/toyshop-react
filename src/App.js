@@ -13,7 +13,7 @@ import {CartContextProvider} from "./context/CartContext";
 
 function App() {
       const productType = "all";
-      const cartList = new Array();
+      const cartList = [];
 
       return (
           <ProductsContextProvider productType = {productType}>

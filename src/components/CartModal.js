@@ -25,6 +25,7 @@ function CartModal(props) {
 
     async function updateCart(currentCart, productToAdd) {
         currentCart = JSON.parse(JSON.stringify(currentCart));
+        //console.log("cart x : ", JSON.parse(JSON.stringify(currentCart)));
 
         productExists(currentCart, productToAdd) ?
             currentCart.splice(getIndexOfExistingProduct(currentCart, productToAdd), 1, productToAdd)
@@ -44,17 +45,18 @@ function CartModal(props) {
     }
 
     function getProductQuantity(cart, product, noOfItems) {
-        let totalQuantity = 0;
+        let totalQuantity = noOfItems;
         cart.forEach((p) => {
             totalQuantity = (p.itemId === product.itemId ? (totalQuantity + noOfItems) : noOfItems);
         });
+
         return totalQuantity;
     }
 
     function getGrossPrice(cart, product, totalPrice) {
-        let grossPrice = 0;
+        let grossPrice = totalPrice;
         cart.forEach((p) => {
-            grossPrice = (p.itemId === product.itemId ? (grossPrice + totalPrice) : totalPrice);
+            grossPrice = (p.product.itemId === product.itemId ? (grossPrice + totalPrice) : totalPrice);
         });
         return grossPrice;
     }
