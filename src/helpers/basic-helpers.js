@@ -6,7 +6,6 @@ export function FetchItems(url, callback) {
 }
 
 export function Authenticate(url, queryData, callback) {
-    console.log("queryData : ", queryData.credential.email);
     fetch(url,{
         method: "POST",
         headers: {

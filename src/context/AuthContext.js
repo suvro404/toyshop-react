@@ -9,30 +9,29 @@ export const AuthContextProvider = ({status, children}) => {
     const [authorized, setAuthorized] = useState(status);
     const [credential, setCredential] = useState({});
     const [actionName, setActionName] = useState('login');
-    console.log("at AuthContext : ", credential, actionName);
+    const [loading, setLoading] = useState(false);
 
     return (
-        <AuthContext.Provider value={{authorized, setAuthorized, credential, actionName, setCredential, setActionName}}>
+        <AuthContext.Provider value={{authorized, setAuthorized, credential, actionName, setCredential, setActionName, loading, setLoading}}>
             {children}
         </AuthContext.Provider>
     );
 }
 
-function authenticateUser(credential, actionName, setAuthorized) {
-    console.log({credential}, ", x", actionName);
+function authenticateUser(credential, actionName, setAuthorized, setLoading) {
     let url = apiPrefix + "/api/"+ actionName;
     Authenticate(url, credential, (d => {
-        actionName == 'login' ? (d.token ? setAuthorized(true) : setAuthorized(false)):(setAuthorized(false));
+        setLoading(false);
+        actionName === 'login' ? (d.token ? setAuthorized(true) : setAuthorized(false)):(setAuthorized(false));
     }));
 }
 
-function isValidOb(obj) {
+function isValidObj(obj) {
     return ((typeof obj === 'object' && Object.keys(obj).length && Object.values(obj).every(x => x != null && x !== '')));
 }
 
 export const useAuth = () => {
-    let {credential, actionName, setAuthorized} = useContext(AuthContext);
-    isValidOb(credential) ? authenticateUser(credential, actionName, setAuthorized) : console.log("credential not valid");
-
+    let {credential, actionName, setAuthorized, setLoading} = useContext(AuthContext);
+    isValidObj(credential) ? authenticateUser(credential, actionName, setAuthorized, setLoading) : console.log("credential not valid");
     return useContext(AuthContext);
 };
