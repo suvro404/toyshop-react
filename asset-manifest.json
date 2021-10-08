@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/toyshop-react/static/css/main.80e485a6.chunk.css",
-    "main.js": "/toyshop-react/static/js/main.05b38138.chunk.js",
-    "main.js.map": "/toyshop-react/static/js/main.05b38138.chunk.js.map",
+    "main.js": "/toyshop-react/static/js/main.c8655e61.chunk.js",
+    "main.js.map": "/toyshop-react/static/js/main.c8655e61.chunk.js.map",
     "runtime-main.js": "/toyshop-react/static/js/runtime-main.5891db8b.js",
     "runtime-main.js.map": "/toyshop-react/static/js/runtime-main.5891db8b.js.map",
     "static/js/2.892792da.chunk.js": "/toyshop-react/static/js/2.892792da.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.5891db8b.js",
     "static/js/2.892792da.chunk.js",
     "static/css/main.80e485a6.chunk.css",
-    "static/js/main.05b38138.chunk.js"
+    "static/js/main.c8655e61.chunk.js"
   ]
 }
