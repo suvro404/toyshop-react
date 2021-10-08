@@ -1,12 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, createRef } from 'react'
 import '../assets/styles/Auth.css'
+import {useAuth} from "../context/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 function Auth() {
+    let emailRef = createRef();
+    let passwordRef = createRef();
     const [authType, setAuthType] = useState('Log In');
+    const {setCredential, setActionName} = useAuth();
 
     function changeAuthType(type) {
         setAuthType(type);
+    }
+
+    function submit() {
+        let credential = {
+            email: emailRef.value,
+            password: passwordRef.value
+        }
+        setCredential({credential});
+        setActionName(getActionName(authType));
+    }
+
+    function getActionName(authType) {
+        return (authType === 'Log In' ? 'login' : 'register');
     }
 
     return (
@@ -16,14 +33,16 @@ function Auth() {
                 <div className="auth-form log-in">
                     <div className="auth-form-item-container">
                         <div className="auth-form-label">Email</div>
-                        <input type="email" name="email" className="auth-form-input" />
+                        <input type="email" name="email" className="auth-form-input" autoComplete="off"
+                               ref={node => emailRef = node} />
                     </div>
                     <div className="auth-form-item-container">
                         <div className="auth-form-label">Password</div>
-                        <input type="password" name="password" className="auth-form-input" />
+                        <input type="password" name="password" className="auth-form-input" autoComplete="off"
+                               ref={node => passwordRef = node} />
                     </div>
                     <div>
-                        <button className="auth-form-action-btn">SUBMIT</button>
+                        <button className="auth-form-action-btn" onClick={() => submit()}>SUBMIT</button>
                     </div>
                     {
                         authType === 'Log In' ? (
