@@ -10,19 +10,34 @@ export const AuthContextProvider = ({status, children}) => {
     const [credential, setCredential] = useState({});
     const [actionName, setActionName] = useState('login');
     const [loading, setLoading] = useState(false);
+    const [authMsg, setAuthMsg] = useState('');
 
     return (
-        <AuthContext.Provider value={{authorized, setAuthorized, credential, actionName, setCredential, setActionName, loading, setLoading}}>
+        <AuthContext.Provider value={{authorized, setAuthorized, credential, actionName, setCredential, setActionName, loading, setLoading, authMsg, setAuthMsg}}>
             {children}
         </AuthContext.Provider>
     );
 }
 
-function authenticateUser(credential, actionName, setAuthorized, setLoading) {
+function authenticateUser(credential, actionName, setAuthorized, setLoading, setAuthMsg, authMsg, setCredential) {
     let url = apiPrefix + "/api/"+ actionName;
     Authenticate(url, credential, (d => {
         setLoading(false);
-        actionName === 'login' ? (d.token ? setAuthorized(true) : setAuthorized(false)):(setAuthorized(false));
+        //actionName === 'login' ? (d.token ? setAuthorized(true) : setAuthorized(false)):(setAuthorized(false));
+        if(actionName === 'login') {
+            if(d.token) {
+                setAuthorized(true);
+                setAuthMsg('Log in successful!');
+            } else {
+                setAuthMsg('Log in failed!');
+            }
+        } else {
+            if(d.id) {
+                setAuthMsg('Sign Up Successful. Please log in to continue.');
+            } else {
+                setAuthMsg('Sign Up failed!');
+            }
+        }
     }));
 }
 
@@ -31,7 +46,7 @@ function isValidObj(obj) {
 }
 
 export const useAuth = () => {
-    let {credential, actionName, setAuthorized, setLoading} = useContext(AuthContext);
-    isValidObj(credential) ? authenticateUser(credential, actionName, setAuthorized, setLoading) : console.log("credential not valid");
+    let {credential, actionName, setAuthorized, setLoading, setAuthMsg, authMsg, setCredential} = useContext(AuthContext);
+    isValidObj(credential) ? authenticateUser(credential, actionName, setAuthorized, setLoading, setAuthMsg, authMsg, setCredential) : console.log("credential not valid");
     return useContext(AuthContext);
 };

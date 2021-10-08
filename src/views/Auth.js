@@ -2,12 +2,13 @@ import { useEffect, useState, createRef } from 'react'
 import '../assets/styles/Auth.css'
 import {useAuth} from "../context/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
+import AuthMsgModal from "../components/AuthMsgModal";
 
 function Auth() {
     let emailRef = createRef();
     let passwordRef = createRef();
     const [authType, setAuthType] = useState('Log In');
-    const {setCredential, setActionName, loading, setLoading} = useAuth();
+    const {setCredential, setActionName, loading, setLoading, authMsg, setAuthMsg} = useAuth();
 
     function changeAuthType(type) {
         setAuthType(type);
@@ -80,6 +81,9 @@ function Auth() {
                                     }
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            {authMsg !== '' && <AuthMsgModal msg={authMsg} />}
                         </div>
                     </div>
                 )
