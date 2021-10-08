@@ -32,6 +32,7 @@ function Auth() {
 
     }
 
+
     function getActionName(authType) {
         return (authType === 'Log In' ? 'login' : 'register');
     }

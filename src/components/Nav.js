@@ -8,7 +8,7 @@ function Nav() {
     const loc = useLocation();
     const [transparentBg, setTransparentBg] = useState(true);
     const {cart, setCart} = useCart();
-    const {authorized, setAuthorized} = useAuth();
+    const {authorized, setAuthorized, setCredential} = useAuth();
 
     //console.log("authorized : ", authorized);
 
@@ -24,12 +24,17 @@ function Nav() {
         }
     }
 
+    function logout() {
+        setAuthorized(false);
+        setCredential({});
+    }
+
     useEffect(() => {
         window.addEventListener('scroll', changeNavBgColor)
         return () => {
             window.removeEventListener('scroll', changeNavBgColor)
         }
-    }, [])
+    }, []);
 
     return (
         <nav className={ transparentBg ? 'bg-transparent' : 'bg-regular' }>
@@ -62,7 +67,7 @@ function Nav() {
                                 </li>
                             </Link>
                             <Link to='/' className="link-name">
-                                <li className='in-active' onClick={() => setAuthorized(false)}>
+                                <li className='in-active' onClick={() => logout()}>
                                     Log Out
                                 </li>
                             </Link>
