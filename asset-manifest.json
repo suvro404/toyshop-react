@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/toyshop-live/static/css/main.80e485a6.chunk.css",
-    "main.js": "/toyshop-live/static/js/main.5a6b5691.chunk.js",
-    "main.js.map": "/toyshop-live/static/js/main.5a6b5691.chunk.js.map",
+    "main.js": "/toyshop-live/static/js/main.462f1652.chunk.js",
+    "main.js.map": "/toyshop-live/static/js/main.462f1652.chunk.js.map",
     "runtime-main.js": "/toyshop-live/static/js/runtime-main.0e5d5167.js",
     "runtime-main.js.map": "/toyshop-live/static/js/runtime-main.0e5d5167.js.map",
     "static/js/2.892792da.chunk.js": "/toyshop-live/static/js/2.892792da.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.0e5d5167.js",
     "static/js/2.892792da.chunk.js",
     "static/css/main.80e485a6.chunk.css",
-    "static/js/main.5a6b5691.chunk.js"
+    "static/js/main.462f1652.chunk.js"
   ]
 }
