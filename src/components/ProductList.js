@@ -5,7 +5,7 @@ function ProductList(props) {
     const history = useHistory();
 
     function goToProductPage(productId) {
-        history.push(`/product/${productId}`);
+        history.push(`${process.env.PUBLIC_URL}/product/${productId}`);
     }
 
     return (

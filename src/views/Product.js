@@ -37,7 +37,7 @@ function Product(props) {
 
     const closeWarningModal = () => {
         setWarningModalShow(false);
-        history.push('/auth');
+        history.push(`${process.env.PUBLIC_URL}/auth`);
     }
 
     return (

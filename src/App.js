@@ -26,13 +26,13 @@ function App() {
                         <div className="App">
                             <Nav />
                             <Switch>
-                                <Route path='/' exact component={Home} />
-                                <Route path='/popular' component={Popular} />
-                                <Route path='/upcoming' component={Upcoming} />
-                                <Route path='/product/:id' component={Product} />
-                                <Route path='/cart' component={Cart} />
-                                <Route path='/auth' component={Auth} />
-                                <Route path='/test' component={Test} />
+                                <Route path={process.env.PUBLIC_URL + '/'} exact component={Home} />
+                                <Route path={process.env.PUBLIC_URL + '/popular'} component={Popular} />
+                                <Route path={process.env.PUBLIC_URL + '/upcoming'} component={Upcoming} />
+                                <Route path={process.env.PUBLIC_URL + '/product/:id'} component={Product} />
+                                <Route path={process.env.PUBLIC_URL + '/cart'} component={Cart} />
+                                <Route path={process.env.PUBLIC_URL + '/auth'} component={Auth} />
+                                <Route path={process.env.PUBLIC_URL + '/test'} component={Test} />
                             </Switch>
                         </div>
                     </Router>

@@ -28,7 +28,7 @@ function Cart() {
     function closeModal () {
         setModalShow(false);
         setCart([]);
-        history.push('/');
+        history.push(`${process.env.PUBLIC_URL}/`);
     }
 
     function getFinalPrice() {

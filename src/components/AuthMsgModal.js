@@ -22,7 +22,7 @@ function AuthMsgModal(props) {
 
     function goToHome() {
         if(authorized) {
-            history.push('/');
+            history.push(`${process.env.PUBLIC_URL}/`);
         }
     }
 

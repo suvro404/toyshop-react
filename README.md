@@ -2,7 +2,7 @@
 A demo app to implement React core functionalities.
 
 ### LIVE DEMO
-To see the live app, [GO HERE](https://suvro404.github.io/toyshop-live).
+To see the live app, [GO HERE](https://suvro404.github.io/toyshop-react/).
 
 ## Project setup
 ```
