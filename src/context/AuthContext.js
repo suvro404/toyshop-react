@@ -18,12 +18,11 @@ export const AuthContextProvider = ({status, children}) => {
     );
 }
 
-function authenticateUser(credential, actionName) {
+function authenticateUser(credential, actionName, setAuthorized) {
     console.log({credential}, ", x", actionName);
     let url = apiPrefix + "/api/"+ actionName;
-    console.log("url : ", url);
     Authenticate(url, credential, (d => {
-        console.log(d);
+        actionName == 'login' ? (d.token ? setAuthorized(true) : setAuthorized(false)):(setAuthorized(false));
     }));
 }
 
@@ -32,8 +31,8 @@ function isValidOb(obj) {
 }
 
 export const useAuth = () => {
-    let {credential, actionName} = useContext(AuthContext);
-    isValidOb(credential) ? authenticateUser(credential, actionName) : console.log("credential not valid");
+    let {credential, actionName, setAuthorized} = useContext(AuthContext);
+    isValidOb(credential) ? authenticateUser(credential, actionName, setAuthorized) : console.log("credential not valid");
 
     return useContext(AuthContext);
 };
