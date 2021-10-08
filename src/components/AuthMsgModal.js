@@ -1,20 +1,29 @@
 import '../assets/styles/WarningModal.css'
 import {useEffect} from "react";
 import {useAuth} from "../context/AuthContext";
+import { useHistory } from "react-router-dom";
 
 function AuthMsgModal(props) {
-    const {setCredential, setActionName, loading, setLoading, authMsg, setAuthMsg} = useAuth();
+    const {authorized, setCredential, setAuthMsg} = useAuth();
+    const history = useHistory();
 
     useEffect(() => {
-        window.addEventListener('click', removeModal);
+        window.addEventListener('click', onRemoveModal);
         return () => {
-            window.removeEventListener('click', removeModal);
+            window.removeEventListener('click', onRemoveModal);
         }
     }, []);
 
-    function removeModal() {
+    function onRemoveModal() {
         setCredential({});
         setAuthMsg('');
+        goToHome();
+    }
+
+    function goToHome() {
+        if(authorized) {
+            history.push('/');
+        }
     }
 
     return (
