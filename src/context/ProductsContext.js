@@ -3,14 +3,14 @@ import {FetchItems} from "../helpers/basic-helpers"
 
 const apiPrefix = 'https://fortnite-api.theapinetwork.com';
 
-const ProductsContext = createContext(null);
+const ProductsContext = createContext();
 
-export const ProductsContextProvider = ({productType, children}) => {
+export const ProductsContextProvider = ({children}) => {
     const [products, setProducts] = useState(null);
-    const [pType, setProductType] = useState(productType);
+    const [productType, setProductType] = useState('all');
     const [loading, setLoading] = useState(false);
 
-    const url = getApiUrl(pType);
+    const url = getApiUrl(productType);
 
     useEffect(() => {
         setLoading(true);
@@ -22,7 +22,7 @@ export const ProductsContextProvider = ({productType, children}) => {
     }, [url]);
 
     return (
-        <ProductsContext.Provider value={{products: products, loading:loading, setProductType: setProductType}}>
+        <ProductsContext.Provider value={{products, loading, setProductType}}>
             {children}
         </ProductsContext.Provider>
     );
@@ -39,9 +39,9 @@ function getApiUrl(productType) {
 }
 
 export const useProductsApi = (productType) => {
-    const {products, setProductType, loading} = useContext(ProductsContext);
+    const {setProductType} = useContext(ProductsContext);
     useEffect(() => {
         setProductType(productType);
-    });
-    return {products, setProductType, loading};
+    }, [productType]);
+    return useContext(ProductsContext);
 };
