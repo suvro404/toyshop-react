@@ -1,44 +1,28 @@
 import '../assets/styles/Cart.css'
 import {useCart} from "../context/CartContext";
-import CheckoutModal from "../components/CheckoutModal";
+import CheckoutConfirmationModal from "../components/CheckoutConfirmationModal";
 import {useState} from "react";
 import { useHistory } from "react-router-dom";
 
 function Cart() {
     const history = useHistory();
-    const {cart, setCart} = useCart();
+    const {products, removeProduct, onCheckout, totalPrice} = useCart();
     const [modalShow, setModalShow] = useState(false);
 
-    function removeProductFromCart(product) {
-        let currentCart = JSON.parse(JSON.stringify(cart));
-
-        currentCart.splice(getPositionOfProductInCart(currentCart, product), 1);
-
-        setCart(currentCart);
-    }
-
-    function getPositionOfProductInCart(cart, product) {
-        return cart.findIndex(p => p.product.itemId === product.itemId);
-    }
-
     function checkOut() {
+        onCheckout();
         setModalShow(true);
     }
 
     function closeModal () {
         setModalShow(false);
-        setCart([]);
         history.push(`${process.env.PUBLIC_URL}/`);
-    }
-
-    function getFinalPrice() {
-        return cart.reduce((sum, p) => sum + p.totalPrice, 0);
     }
 
     return (
         <div className="flex-container">
             {
-                cart.length ? (
+                products.length ? (
                     <div className="cart-table-container">
                         <table className="cart-table">
                             <thead>
@@ -51,21 +35,21 @@ function Cart() {
                             </thead>
                             <tbody>
                             {
-                                cart.map(product => {
+                                products.map(product => {
                                     return (
-                                        <tr key={product.product.itemId}>
+                                        <tr key={product.itemId}>
                                             <td>
-                                                <img src={product.product.item.images.icon} alt="Avatar" className="cart-item-img" />
-                                                <h4>{product.product.item.name}</h4>
+                                                <img src={product.item.images.icon} alt="Avatar" className="cart-item-img" />
+                                                <h4>{product.item.name}</h4>
                                             </td>
                                             <td>
                                                 {product.quantity}
                                             </td>
                                             <td>
-                                                {product.totalPrice}
+                                                {product.price}
                                             </td>
                                             <td>
-                                                <button className="cart-table-btn" onClick={() => removeProductFromCart(product.product)}>
+                                                <button className="cart-table-btn" onClick={() => removeProduct(product)}>
                                                     REMOVE
                                                 </button>
                                             </td>
@@ -75,7 +59,7 @@ function Cart() {
                             }
                             <tr className="final-result-row">
                                 <td colSpan="2">Total</td>
-                                <td>{getFinalPrice()}</td>
+                                <td>{totalPrice}</td>
                                 <td className="btn-container">
                                     <button className="cart-table-btn checkout-btn" onClick={() => checkOut()}>
                                         CHECKOUT
@@ -92,7 +76,7 @@ function Cart() {
                 )
             }
             <div>
-                {modalShow && <CheckoutModal  onClose={closeModal} />}
+                {modalShow && <CheckoutConfirmationModal onClose={closeModal} />}
             </div>
         </div>
     );

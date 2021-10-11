@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {FetchItems} from "../helpers/basic-helpers"
 import '../assets/styles/Product.css'
 import LoadingSpinner from "../components/LoadingSpinner";
-import CartModal from "../components/CartModal";
+import CartModal from "../components/CartProductModal";
 import {useAuth} from "../context/AuthContext"
 import WarningModal from "../components/WarningModal";
 import {useHistory} from "react-router-dom";

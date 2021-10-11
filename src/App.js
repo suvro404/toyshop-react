@@ -11,17 +11,16 @@ import Test from "./views/Test";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import {ProductsContextProvider} from "./context/ProductsContextApi";
 import {CartContextProvider} from "./context/CartContext";
-import {AuthContextProvider} from "./context/AuthContext"
+import {AuthContextProvider} from "./context/AuthContext";
 
 function App() {
     const productType = "all";
-    const cartList = [];
-    const authorized = false;
+    const authorized = true;
 
     return (
         <AuthContextProvider status = {authorized}>
             <ProductsContextProvider productType = {productType}>
-                <CartContextProvider cartList = {cartList}>
+                <CartContextProvider>
                     <Router>
                         <div className="App">
                             <Nav />

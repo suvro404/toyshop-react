@@ -1,6 +1,6 @@
 import '../assets/styles/CheckoutModal.css'
 
-function CheckoutModal(props) {
+function CheckoutConfirmationModal(props) {
     function getTodayDate() {
         let date = new Date();
         let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -41,4 +41,4 @@ function CheckoutModal(props) {
     );
 }
 
-export default CheckoutModal;
+export default CheckoutConfirmationModal;

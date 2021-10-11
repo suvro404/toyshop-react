@@ -7,7 +7,7 @@ import {useAuth} from "../context/AuthContext"
 function Nav() {
     const loc = useLocation();
     const [transparentBg, setTransparentBg] = useState(true);
-    const {cart, setCart} = useCart();
+    const {products} = useCart();
     const {authorized, setAuthorized, setCredential} = useAuth();
 
     //console.log("authorized : ", authorized);
@@ -63,7 +63,7 @@ function Nav() {
                         <div className="link-group">
                             <Link to={process.env.PUBLIC_URL + '/cart'} className="link-name">
                                 <li className={ isCurrentRoute('/cart') ? 'active' : 'in-active' }>
-                                    Cart{cart && cart.length > 0 && <sup>{cart.length}</sup>}
+                                    Cart{products && products.length > 0 && <sup>{products.length}</sup>}
                                 </li>
                             </Link>
                             <Link to={process.env.PUBLIC_URL + '/'} className="link-name">
