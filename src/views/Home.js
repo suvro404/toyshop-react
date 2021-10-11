@@ -1,6 +1,6 @@
 import ProductList from "../components/ProductList";
 import LoadingSpinner from "../components/LoadingSpinner";
-import {useProductsApi} from "../context/ProductsContextApi";
+import {useProductsApi} from "../context/ProductsContext";
 
 function Home() {
     const {products, loading} = useProductsApi("all");

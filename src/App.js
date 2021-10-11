@@ -9,7 +9,7 @@ import Auth from "./views/Auth";
 import Test from "./views/Test";
 
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import {ProductsContextProvider} from "./context/ProductsContextApi";
+import {ProductsContextProvider} from "./context/ProductsContext";
 import {CartContextProvider} from "./context/CartContext";
 import {AuthContextProvider} from "./context/AuthContext";
 
