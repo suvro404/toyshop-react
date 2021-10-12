@@ -34,7 +34,7 @@ function getApiUrl(productType) {
         case 'popular': return apiPrefix + '/items/list';
         case 'upcoming': return apiPrefix + '/upcoming/get';
 
-        default: return "";
+        default: return apiPrefix + '/store/get';
     }
 }
 
