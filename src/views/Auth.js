@@ -2,7 +2,7 @@ import { useEffect, useState, createRef } from 'react'
 import '../assets/styles/Auth.css'
 import {useAuth} from "../context/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
-import AuthMsgModal from "../components/AuthMsgModal";
+import AuthMsgModal from "../components/AuthResultModal";
 
 function Auth() {
     let emailRef = createRef();

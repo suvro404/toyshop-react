@@ -4,7 +4,7 @@ import '../assets/styles/Product.css'
 import LoadingSpinner from "../components/LoadingSpinner";
 import CartModal from "../components/CartProductModal";
 import {useAuth} from "../context/AuthContext"
-import WarningModal from "../components/WarningModal";
+import WarningModal from "../components/AuthWarningModal";
 import {useHistory} from "react-router-dom";
 
 function Product(props) {
