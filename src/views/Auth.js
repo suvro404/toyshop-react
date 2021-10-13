@@ -9,7 +9,7 @@ function Auth() {
     let emailRef = createRef();
     let passwordRef = createRef();
     const [authType, setAuthType] = useState('Log In');
-    const {setCredential, setActionName, loading, setLoading, authMsg, setAuthMsg} = useAuth();
+    const {setCredentials, setActionName, loading, setLoading, authMsg, setAuthMsg} = useAuth();
 
     function changeAuthType(type) {
         setAuthType(type);
@@ -26,7 +26,7 @@ function Auth() {
         }
         if(isValidObj(credential)) {
             setLoading(true);
-            setCredential({credential});
+            setCredentials({credential});
             setActionName(getActionName(authType));
         } else {
             console.log("not a valid credential");

@@ -1,15 +1,20 @@
-import {useState, createContext, useContext, ReactNode, FC} from 'react';
+import {useState, createContext, useContext, FC} from 'react';
 import {Authenticate} from "../helpers/basic-helpers";
 
 type SetBooleanFunction = (a: boolean) => void;
 type SetStringFunction = (a: string) => void;
-type SetObjectFunction = (a: string) => void;
+type SetCredentialsFunction = (a: Credentials) => void;
+
+interface Credentials {
+    username: string,
+    password: string
+}
 
 interface ContextInterface {
     authorized: boolean,
     setAuthorized: SetBooleanFunction,
-    credential: object,
-    setCredential: SetObjectFunction,
+    credentials: Credentials,
+    setCredentials: SetCredentialsFunction,
     actionName: string,
     setActionName: SetStringFunction,
     loading: boolean,
@@ -24,12 +29,12 @@ const apiPrefix = 'https://reqres.in';
 
 export const AuthContextProvider: FC<ContextInterface> = ({children}) => {
     const [authorized, setAuthorized] = useState(false);
-    const [credential, setCredential] = useState({});
+    const [credentials, setCredentials] = useState({username: '', password: ''});
     const [actionName, setActionName] = useState('login');
     const [loading, setLoading] = useState(false);
     const [authMsg, setAuthMsg] = useState('');
 
-    const providerValues:ContextInterface = {authorized, setAuthorized, credential, setCredential, actionName, setActionName, loading, setLoading, authMsg, setAuthMsg};
+    const providerValues:ContextInterface = {authorized, setAuthorized, credentials, setCredentials, actionName, setActionName, loading, setLoading, authMsg, setAuthMsg};
 
     return (
         <AuthContext.Provider value={providerValues}>
@@ -40,7 +45,7 @@ export const AuthContextProvider: FC<ContextInterface> = ({children}) => {
 
 function authenticateUser(ctxValues:ContextInterface) {
     let url = apiPrefix + "/api/"+ ctxValues.actionName;
-    Authenticate(url, ctxValues.credential, ((d:any) => {
+    Authenticate(url, ctxValues.credentials, ((d:any) => {
         ctxValues.setLoading(false);
         //actionName === 'login' ? (d.token ? setAuthorized(true) : setAuthorized(false)):(setAuthorized(false));
         if(ctxValues.actionName === 'login') {
@@ -60,17 +65,16 @@ function authenticateUser(ctxValues:ContextInterface) {
     }));
 }
 
-function isValidObj(obj:Object) {
-    return ((typeof obj === 'object' && Object.keys(obj).length && Object.values(obj).every(x => x != null && x !== '')));
+function isValidCredentail(creds:Credentials) {
+    return ((typeof creds === 'object' && Object.keys(creds).length && Object.values(creds).every(x => x != null && x !== '')));
 }
 
 export const useAuth = () => {
-    console.log("test : ", useContext(AuthContext));
     let contextValues:ContextInterface | null = useContext<ContextInterface | null>(AuthContext);
 
     if(contextValues) {
-        isValidObj(contextValues.credential) ? authenticateUser(contextValues) : console.log("credential not valid");
+        isValidCredentail(contextValues.credentials) ? authenticateUser(contextValues) : console.log("credential not valid");
     }
 
-    return useContext(AuthContext);
+    return contextValues;
 };
