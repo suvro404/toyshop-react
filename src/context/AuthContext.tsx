@@ -1,46 +1,60 @@
 import {useState, createContext, useContext, ReactNode, FC} from 'react';
 import {Authenticate} from "../helpers/basic-helpers";
 
-const AuthContext = createContext<any>(null);
-
-const apiPrefix:string = 'https://reqres.in';
-
 type SetBooleanFunction = (a: boolean) => void;
 type SetStringFunction = (a: string) => void;
 type SetObjectFunction = (a: string) => void;
 
-export const AuthContextProvider: FC<ReactNode> = ({children}) => {
-    const [authorized, setAuthorized] = useState<boolean>(true);
-    const [credential, setCredential] = useState<object>({});
-    const [actionName, setActionName] = useState<string>('login');
-    const [loading, setLoading] = useState<boolean>(false);
-    const [authMsg, setAuthMsg] = useState<string>('');
+interface ContextInterface {
+    authorized: boolean,
+    setAuthorized: SetBooleanFunction,
+    credential: object,
+    setCredential: SetObjectFunction,
+    actionName: string,
+    setActionName: SetStringFunction,
+    loading: boolean,
+    setLoading: SetBooleanFunction,
+    authMsg: string,
+    setAuthMsg: SetStringFunction
+}
+
+const AuthContext = createContext<ContextInterface | null>(null);
+
+const apiPrefix = 'https://reqres.in';
+
+export const AuthContextProvider: FC<ContextInterface> = ({children}) => {
+    const [authorized, setAuthorized] = useState(false);
+    const [credential, setCredential] = useState({});
+    const [actionName, setActionName] = useState('login');
+    const [loading, setLoading] = useState(false);
+    const [authMsg, setAuthMsg] = useState('');
+
+    const providerValues:ContextInterface = {authorized, setAuthorized, credential, setCredential, actionName, setActionName, loading, setLoading, authMsg, setAuthMsg};
 
     return (
-        <AuthContext.Provider value={{authorized, setAuthorized, credential, actionName, setCredential, setActionName, loading, setLoading, authMsg, setAuthMsg}}>
+        <AuthContext.Provider value={providerValues}>
             {children}
         </AuthContext.Provider>
     );
 }
 
-function authenticateUser(credential:object, actionName:string, setAuthorized:SetBooleanFunction, setLoading:SetBooleanFunction, 
-    setAuthMsg:SetStringFunction, authMsg:string, setCredential:SetObjectFunction) {
-    let url = apiPrefix + "/api/"+ actionName;
-    Authenticate(url, credential, ((d:any) => {
-        setLoading(false);
+function authenticateUser(ctxValues:ContextInterface) {
+    let url = apiPrefix + "/api/"+ ctxValues.actionName;
+    Authenticate(url, ctxValues.credential, ((d:any) => {
+        ctxValues.setLoading(false);
         //actionName === 'login' ? (d.token ? setAuthorized(true) : setAuthorized(false)):(setAuthorized(false));
-        if(actionName === 'login') {
+        if(ctxValues.actionName === 'login') {
             if(d.token) {
-                setAuthorized(true);
-                setAuthMsg('Log in successful!');
+                ctxValues.setAuthorized(true);
+                ctxValues.setAuthMsg('Log in successful!');
             } else {
-                setAuthMsg('Log in failed!');
+                ctxValues.setAuthMsg('Log in failed!');
             }
         } else {
             if(d.id) {
-                setAuthMsg('Sign Up Successful. Please log in to continue.');
+                ctxValues.setAuthMsg('Sign Up Successful. Please log in to continue.');
             } else {
-                setAuthMsg('Sign Up failed!');
+                ctxValues.setAuthMsg('Sign Up failed!');
             }
         }
     }));
@@ -51,8 +65,12 @@ function isValidObj(obj:Object) {
 }
 
 export const useAuth = () => {
-    let {credential, actionName, setAuthorized, setLoading, setAuthMsg, authMsg, setCredential}:
-    {credential:object, actionName:string, setAuthorized:SetBooleanFunction, setLoading:SetBooleanFunction, setAuthMsg:SetStringFunction, authMsg:string, setCredential:SetObjectFunction} = useContext<any>(AuthContext);
-    isValidObj(credential) ? authenticateUser(credential, actionName, setAuthorized, setLoading, setAuthMsg, authMsg, setCredential) : console.log("credential not valid");
+    console.log("test : ", useContext(AuthContext));
+    let contextValues:ContextInterface | null = useContext<ContextInterface | null>(AuthContext);
+
+    if(contextValues) {
+        isValidObj(contextValues.credential) ? authenticateUser(contextValues) : console.log("credential not valid");
+    }
+
     return useContext(AuthContext);
 };
