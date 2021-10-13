@@ -14,12 +14,9 @@ import {CartContextProvider} from "./context/CartContext";
 import {AuthContextProvider} from "./context/AuthContext";
 
 function App() {
-    const productType = "all";
-    const authorized = true;
-
     return (
-        <AuthContextProvider status = {authorized}>
-            <ProductsContextProvider productType = {productType}>
+        <AuthContextProvider>
+            <ProductsContextProvider>
                 <CartContextProvider>
                     <Router>
                         <div className="App">

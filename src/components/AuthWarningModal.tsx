@@ -1,6 +1,11 @@
 import '../assets/styles/WarningModal.css'
+import {FC, MouseEvent} from "react";
 
-function WarningModal(props) {
+interface ModalProps {
+    ClickHandler: (event: MouseEvent<HTMLButtonElement>) => void
+}
+
+const WarningModal: FC<{onClose:ModalProps}> = (props): JSX.Element => {
     return (
         <div className="modal">
             <div className="modal-content-container">
@@ -8,7 +13,7 @@ function WarningModal(props) {
                     <div>
                         <h2>Please Log In to continue.</h2>
                         <div>
-                            <button className="modal-close-button" onClick={props.onClose}>OK</button>
+                            <button className="modal-close-button" onClick={() =>props.onClose}>OK</button>
                         </div>
                     </div>
                 </div>

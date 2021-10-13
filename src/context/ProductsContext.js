@@ -45,11 +45,3 @@ export const useProductsApi = (productType) => {
     }, [productType]);
     return useContext(ProductsContext);
 };
-
-// export const useProductsApi = {
-//     loadProducts: function(productType) {
-//         const {setProductType} = useContext(ProductsContext);
-//         setProductType(productType);
-//         return useContext(ProductsContext);
-//     }
-// }

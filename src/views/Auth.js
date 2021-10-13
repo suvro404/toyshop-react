@@ -2,7 +2,8 @@ import { useEffect, useState, createRef } from 'react'
 import '../assets/styles/Auth.css'
 import {useAuth} from "../context/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
-import AuthMsgModal from "../components/AuthResultModal";
+import AuthResultModal from "../components/AuthResultModal";
+
 
 function Auth() {
     let emailRef = createRef();
@@ -83,7 +84,7 @@ function Auth() {
                             </div>
                         </div>
                         <div>
-                            {authMsg !== '' && <AuthMsgModal msg={authMsg} />}
+                            {authMsg !== '' && <AuthResultModal msg={authMsg} />}
                         </div>
                     </div>
                 )

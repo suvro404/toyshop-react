@@ -1,9 +1,13 @@
 import '../assets/styles/WarningModal.css'
-import {useEffect} from "react";
+import {useEffect, FC} from "react";
 import {useAuth} from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 
-function AuthMsgModal(props) {
+// interface AuthResultProps {
+//     msg: string,
+// }
+
+const AuthResultModal: FC<{msg:string}> = (props): JSX.Element => {
     const {authorized, setCredential, setAuthMsg} = useAuth();
     const history = useHistory();
 
@@ -39,4 +43,4 @@ function AuthMsgModal(props) {
     );
 }
 
-export default AuthMsgModal;
+export default AuthResultModal;
