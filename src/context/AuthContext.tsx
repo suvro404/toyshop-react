@@ -3,10 +3,10 @@ import {Authenticate} from "../helpers/basic-helpers";
 
 import {SetBooleanFunction, SetStringFunction} from '../type'
 
-type SetCredentialsFunction = (a: Credentials) => void;
+type SetCredentialsFunction = (a: ICredentials) => void;
 
-interface Credentials {
-    username: string,
+export interface ICredentials {
+    email: string,
     password: string
 }
 
@@ -17,7 +17,7 @@ const apiPrefix = 'https://reqres.in';
 export interface ContextInterface {
     authorized: boolean,
     setAuthorized: SetBooleanFunction,
-    credentials: Credentials,
+    credentials: ICredentials,
     setCredentials: SetCredentialsFunction,
     actionName: string,
     setActionName: SetStringFunction,
@@ -33,7 +33,6 @@ export const AuthContextProvider: FC<ReactNode> = ({children}) => {
     const [actionName, setActionName] = useState('login');
     const [loading, setLoading] = useState(false);
     const [authMsg, setAuthMsg] = useState('');
-
     const providerValues:ContextInterface = {authorized, setAuthorized, credentials, setCredentials, actionName, setActionName, loading, setLoading, authMsg, setAuthMsg};
 
     return (
@@ -45,6 +44,7 @@ export const AuthContextProvider: FC<ReactNode> = ({children}) => {
 
 function authenticateUser(ctxValues:ContextInterface) {
     let url = apiPrefix + "/api/"+ ctxValues.actionName;
+    console.log("cx : ", ctxValues.credentials);
     Authenticate(url, ctxValues.credentials, ((d:any) => {
         ctxValues.setLoading(false);
         //actionName === 'login' ? (d.token ? setAuthorized(true) : setAuthorized(false)):(setAuthorized(false));
@@ -65,7 +65,7 @@ function authenticateUser(ctxValues:ContextInterface) {
     }));
 }
 
-function isValidCredentail(creds:Credentials) {
+function isValidCredentail(creds:ICredentials) {
     return ((typeof creds === 'object' && Object.keys(creds).length && Object.values(creds).every(x => x != null && x !== '')));
 }
 
@@ -76,5 +76,5 @@ export const useAuth = () => {
         isValidCredentail(contextValues.credentials) ? authenticateUser(contextValues) : console.log("credential not valid");
     }
 
-    return contextValues;
+    return contextValues as ContextInterface;
 };

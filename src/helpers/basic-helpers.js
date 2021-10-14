@@ -11,7 +11,7 @@ export function Authenticate(url, queryData, callback) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({email: queryData.credential.email, password: queryData.credential.password})
+        body: JSON.stringify({email: queryData.email, password: queryData.password})
     })
         .then(response => response.json())
         .then(data => callback(data))
