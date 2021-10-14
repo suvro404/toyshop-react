@@ -52,32 +52,29 @@ function getApiUrl(productType:string):string {
         default: return apiPrefix + '/store/get';
     }
 }
-// source product is received from the server and is used generate product with essential properties
+// source product is received from the server and is used to generate product with essential properties
 function getProductWithEssentialProperties(sourceProduct:IKeyable):IProduct {
-    let product! : IProduct;
-    if(product) {
-        product.id = sourceProduct.itemId;
-        product.name = sourceProduct.item.name;
-        product.description = sourceProduct.item.description;
-        product.imageUrl = sourceProduct.item.images.icon;
-        product.price = typeof Number(sourceProduct.item.cost) == 'number' ? Number(sourceProduct.item.cost) : 100; //setting a default value 100 for the sake of UI
-        product.ratings = {
+    let product : IProduct = {
+        id: sourceProduct.itemId,
+        name: sourceProduct.item.name,
+        description: sourceProduct.item.description,
+        imageUrl: sourceProduct.item.images.icon,
+        price: typeof Number(sourceProduct.item.cost) == 'number' ? Number(sourceProduct.item.cost) : 100, //setting a default value 100 for the sake of UI
+        ratings: {
             avg: sourceProduct.item.avgStars,
             points: sourceProduct.item.totalPoints,
             votes: sourceProduct.item.numberVotes,
-        };
-        product.isNew = (sourceProduct.isNew ? sourceProduct.isNew : null);
+        },
+        isNew: (sourceProduct.isNew ? sourceProduct.isNew : null),
     }
     return product as IProduct;
 }
 
 function getProducts(sourceProducts:Array<IKeyable>):IProduct[] {
-    let products! : IProduct[];
+    let products: IProduct[] = [];
     sourceProducts.forEach(p => {
         let product:IProduct = getProductWithEssentialProperties(p);
-        if(products) {
-            products.push(product);
-        }
+        products.push(product);
     });
 
     return products as IProduct[];
