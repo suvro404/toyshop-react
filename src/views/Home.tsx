@@ -12,7 +12,7 @@ function Home() {
                 ) : (
                     products ? (
                         products.length ? (
-                            <ProductList list={products} />
+                            <ProductList productsList={products} />
                         ) : (
                             <h2>No products to show</h2>
                         )

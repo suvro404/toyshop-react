@@ -18,7 +18,8 @@ export interface IProduct {
         points: number,
         votes: number
     },
-    isNew: boolean | null
+    isNew: boolean | null,
+    store?: IKeyable
 }
 
 export interface ICartItem {
