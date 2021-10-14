@@ -12,18 +12,18 @@ function ProductList(props) {
         <div className="card-container">
             {
                 props.list.map(product => (
-                    <div className="card" key={product.itemId} onClick={() => goToProductPage(product.itemId)}>
+                    <div className="card" key={product.id} onClick={() => goToProductPage(product.id)}>
                         <div className="card-header">
                             <div className="rating-container">
                                 <div className="star">&nbsp;</div>
                                 <div className="rating">
-                                    {product.item.ratings.avgStars}
+                                    {product.ratings.avg}
                                 </div>
                             </div>
                             <div className="ribbon-container">
                                 {
                                     product.store ? (
-                                        !product.store.isNew ? (
+                                        product.isNew ? (
                                             <div className="ribbon"><span>New</span></div>
                                         ): (
                                             <div>&nbsp;</div>
@@ -35,16 +35,10 @@ function ProductList(props) {
 
                             </div>
                         </div>
-                        <img src={product.item.images.icon} alt="Avatar" className="card-img" />
+                        <img src={product.imageUrl} alt="Avatar" className="card-img" />
                         <div className="card-content">
-                            <h3><b>{product.item.name}</b></h3>
-                            {
-                                product.store ? (
-                                    <p>$ {product.store.cost} (USD)</p>
-                                ): (
-                                    <p>$ {product.item.cost} (USD)</p>
-                                )
-                            }
+                            <h3><b>{product.name}</b></h3>
+                            <p>$ {product.price} (USD)</p>
                         </div>
                     </div>
                 ))
