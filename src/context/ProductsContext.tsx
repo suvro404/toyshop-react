@@ -59,7 +59,7 @@ function getProductWithEssentialProperties(sourceProduct:IKeyable):IProduct {
         name: sourceProduct.item.name,
         description: sourceProduct.item.description,
         imageUrl: sourceProduct.item.images.icon,
-        price: typeof Number(sourceProduct.item.cost) == 'number' ? Number(sourceProduct.item.cost) : 100, //setting a default value 100 for the sake of UI
+        price: getProductPrice(sourceProduct),
         ratings: {
             avg: sourceProduct.item.avgStars,
             points: sourceProduct.item.totalPoints,
@@ -68,6 +68,12 @@ function getProductWithEssentialProperties(sourceProduct:IKeyable):IProduct {
         isNew: (sourceProduct.isNew ? sourceProduct.isNew : null),
     }
     return product as IProduct;
+}
+
+function getProductPrice(sourceProduct:IKeyable):number {
+    let price = (sourceProduct.store ? sourceProduct.store.cost : sourceProduct.item.cost);
+    price = typeof(price) == 'number' ? price : 100; //setting a default value for undefined price
+    return price;
 }
 
 function getProducts(sourceProducts:Array<IKeyable>):IProduct[] {
