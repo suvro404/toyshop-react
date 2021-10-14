@@ -1,15 +1,31 @@
 export type SetBooleanFunction = (a: boolean) => void;
 export type SetStringFunction = (a: string) => void;
 export type SetObjectFunction = (a: object) => void;
+export type SetAarrayFunction = (a: Array<object>) => void;
 
-interface Product {
-    itemId: number,
+export interface IKeyable {
+    [key: string]: any;  
+}
+
+export interface IProduct {
+    id: number,
     name: string,
     description: string,
     imageUrl: string,
-    quantity: number,
     price: number,
-    rating: number,
-    isNew: boolean
+    ratings: {
+        avg: number,
+        points: number,
+        votes: number
+    },
+    isNew: boolean | null
+}
+
+export interface ICartItem {
+    id: number,
+    name: string,
+    imageUrl: string,
+    totalPrice: number,
+    totalQuantity: number
 }
 
