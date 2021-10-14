@@ -24,7 +24,9 @@ export interface ContextInterface {
     loading: boolean,
     setLoading: SetBooleanFunction,
     authMsg: string,
-    setAuthMsg: SetStringFunction
+    setAuthMsg: SetStringFunction,
+    showAuthResultModal: boolean,
+    setShowAuthResultModal: SetBooleanFunction
 }
 
 export const AuthContextProvider: FC<ReactNode> = ({children}) => {
@@ -33,7 +35,8 @@ export const AuthContextProvider: FC<ReactNode> = ({children}) => {
     const [actionName, setActionName] = useState('login');
     const [loading, setLoading] = useState(false);
     const [authMsg, setAuthMsg] = useState('');
-    const providerValues:ContextInterface = {authorized, setAuthorized, credentials, setCredentials, actionName, setActionName, loading, setLoading, authMsg, setAuthMsg};
+    const [showAuthResultModal, setShowAuthResultModal] = useState(false);
+    const providerValues:ContextInterface = {authorized, setAuthorized, credentials, setCredentials, actionName, setActionName, loading, setLoading, authMsg, setAuthMsg, showAuthResultModal, setShowAuthResultModal};
 
     return (
         <AuthContext.Provider value={providerValues}>
@@ -61,6 +64,7 @@ function authenticateUser(ctxValues:ContextInterface) {
                 ctxValues.setAuthMsg('Sign Up failed!');
             }
         }
+        ctxValues.setShowAuthResultModal(true);
     }));
 }
 

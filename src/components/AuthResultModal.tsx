@@ -3,12 +3,8 @@ import {useEffect, FC} from "react";
 import {useAuth} from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 
-// interface AuthResultProps {
-//     msg: string,
-// }
-
 const AuthResultModal: FC<{msg:string}> = (props): JSX.Element => {
-    const {authorized, setCredentials, setAuthMsg} = useAuth();
+    const {authorized, setShowAuthResultModal} = useAuth();
     const history = useHistory();
 
     useEffect(() => {
@@ -19,8 +15,7 @@ const AuthResultModal: FC<{msg:string}> = (props): JSX.Element => {
     }, []);
 
     function onRemoveModal() {
-        setCredential({});
-        setAuthMsg('');
+        setShowAuthResultModal(false);
         goToHome();
     }
 

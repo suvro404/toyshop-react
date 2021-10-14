@@ -8,7 +8,7 @@ import {IKeyable} from "../type"
 
 function Auth() {
     const [authType, setAuthType] = useState('Log In');
-    const {setCredentials, setActionName, loading, setLoading, authMsg, setAuthMsg} = useAuth();
+    const {setCredentials, setActionName, loading, setLoading, authMsg, showAuthResultModal} = useAuth();
 
     const [userInput, setUserInput] = useReducer(
         (state:IKeyable, newState:IKeyable) => ({...state, ...newState}), {
@@ -83,7 +83,7 @@ function Auth() {
                             </div>
                         </div>
                         <div>
-                            {authMsg !== '' && <AuthResultModal msg={authMsg} />}
+                            {showAuthResultModal && <AuthResultModal msg={authMsg} />}
                         </div>
                     </div>
                 )
