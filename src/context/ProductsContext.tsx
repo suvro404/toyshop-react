@@ -14,6 +14,8 @@ interface ContextInterface {
     setLoading?: SetBooleanFunction
 }
 
+
+
 const apiPrefix = 'https://fortnite-api.theapinetwork.com';
 
 const ProductsContext = createContext<ContextInterface | null>(null);

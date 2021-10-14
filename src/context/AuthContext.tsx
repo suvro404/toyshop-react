@@ -1,8 +1,8 @@
 import {useState, createContext, useContext, FC} from 'react';
 import {Authenticate} from "../helpers/basic-helpers";
 
-type SetBooleanFunction = (a: boolean) => void;
-type SetStringFunction = (a: string) => void;
+import {SetBooleanFunction, SetStringFunction} from '../type'
+
 type SetCredentialsFunction = (a: Credentials) => void;
 
 interface Credentials {
@@ -10,7 +10,11 @@ interface Credentials {
     password: string
 }
 
-interface ContextInterface {
+const AuthContext = createContext<ContextInterface | null>(null);
+
+const apiPrefix = 'https://reqres.in';
+
+export interface ContextInterface {
     authorized: boolean,
     setAuthorized: SetBooleanFunction,
     credentials: Credentials,
@@ -22,10 +26,6 @@ interface ContextInterface {
     authMsg: string,
     setAuthMsg: SetStringFunction
 }
-
-const AuthContext = createContext<ContextInterface | null>(null);
-
-const apiPrefix = 'https://reqres.in';
 
 export const AuthContextProvider: FC<ContextInterface> = ({children}) => {
     const [authorized, setAuthorized] = useState(false);
