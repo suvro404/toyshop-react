@@ -29,7 +29,7 @@ export interface ContextInterface {
 
 export const AuthContextProvider: FC<ReactNode> = ({children}) => {
     const [authorized, setAuthorized] = useState(false);
-    const [credentials, setCredentials] = useState({username: '', password: ''});
+    const [credentials, setCredentials] = useState({email: '', password: ''});
     const [actionName, setActionName] = useState('login');
     const [loading, setLoading] = useState(false);
     const [authMsg, setAuthMsg] = useState('');
@@ -44,7 +44,6 @@ export const AuthContextProvider: FC<ReactNode> = ({children}) => {
 
 function authenticateUser(ctxValues:ContextInterface) {
     let url = apiPrefix + "/api/"+ ctxValues.actionName;
-    console.log("cx : ", ctxValues.credentials);
     Authenticate(url, ctxValues.credentials, ((d:any) => {
         ctxValues.setLoading(false);
         //actionName === 'login' ? (d.token ? setAuthorized(true) : setAuthorized(false)):(setAuthorized(false));
