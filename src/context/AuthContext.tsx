@@ -1,4 +1,4 @@
-import {useState, createContext, useContext, FC} from 'react';
+import {useState, createContext, useContext, FC, ReactNode} from 'react';
 import {Authenticate} from "../helpers/basic-helpers";
 
 import {SetBooleanFunction, SetStringFunction} from '../type'
@@ -27,7 +27,7 @@ export interface ContextInterface {
     setAuthMsg: SetStringFunction
 }
 
-export const AuthContextProvider: FC<ContextInterface> = ({children}) => {
+export const AuthContextProvider: FC<ReactNode> = ({children}) => {
     const [authorized, setAuthorized] = useState(false);
     const [credentials, setCredentials] = useState({username: '', password: ''});
     const [actionName, setActionName] = useState('login');

@@ -1,13 +1,13 @@
-import React, {useState, createContext, useContext, useEffect, FC} from 'react';
+import React, {useState, createContext, useContext, useEffect, FC, ReactNode} from 'react';
 import {FetchItems} from "../helpers/basic-helpers"
 
-import {SetBooleanFunction, SetStringFunction, SetAarrayFunction, IProduct, IKeyable} from '../type'
+import {SetBooleanFunction, SetStringFunction, IProduct, IKeyable} from '../type'
 
-type SetProductFunction = (a: Array<IProduct>) => void;
+type SetProductsFunction = (a: Array<IProduct>) => void;
 
 interface ContextInterface {
     products: Array<IProduct>,
-    setProducts?: SetProductFunction,
+    setProducts?: SetProductsFunction,
     productType?: string,
     setProductType: SetStringFunction,
     loading: boolean,
@@ -18,7 +18,7 @@ const apiPrefix = 'https://fortnite-api.theapinetwork.com';
 
 const ProductsContext = createContext<ContextInterface | null>(null);
 
-export const ProductsContextProvider: FC<ContextInterface> = ({children}) => {
+export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
     const [products, setProducts] = useState<IProduct[]>([]);
     const [productType, setProductType] = useState('all');
     const [loading, setLoading] = useState(false);
@@ -86,12 +86,12 @@ function getProducts(sourceProducts:Array<IKeyable>):IProduct[] {
     return products as IProduct[];
 }
 
-export const useProductsApi = (productType:string) => {
+export const useProducts = (productType:string) => {
     let contextValues:ContextInterface | null = useContext<ContextInterface | null>(ProductsContext);
     useEffect(() => {
         if(contextValues && contextValues.setProductType) {
             contextValues.setProductType(productType);
         }
     }, [productType]);
-    return useContext(ProductsContext);
+    return contextValues as ContextInterface;
 };

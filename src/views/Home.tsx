@@ -1,9 +1,9 @@
 import ProductList from "../components/ProductList";
 import LoadingSpinner from "../components/LoadingSpinner";
-import {useProductsApi} from "../context/ProductsContext";
+import {useProducts} from "../context/ProductsContext";
 
 function Home() {
-    const {products, loading} = useProductsApi("all");
+    const {products, loading} = useProducts("all");
     return (
         <div>
             {
