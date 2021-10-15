@@ -30,7 +30,7 @@ const AuthContext = createContext<ContextInterface | null>(null);
 const apiPrefix = 'https://reqres.in';
 
 export const AuthContextProvider: FC<ReactNode> = ({children}) => {
-    const [authorized, setAuthorized] = useState(true); //setting true to test
+    const [authorized, setAuthorized] = useState(false);
     const [credentials, setCredentials] = useState({email: '', password: ''});
     const [actionName, setActionName] = useState('login');
     const [loading, setLoading] = useState(false);
