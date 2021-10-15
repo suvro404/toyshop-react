@@ -9,11 +9,11 @@ const CartProductModal: FC<{product:IProduct, onClose:ClickHandler}> = (props): 
     const {addProduct} = useCart();
     const [quantity, setQuantity] = useState(1);
 
-    function closeModal(e: React.MouseEvent<HTMLButtonElement>) {
+    function closeModal(e: MouseEvent<HTMLButtonElement>) {
         props.onClose(e);
     }
 
-    function confirm(e: React.MouseEvent<HTMLButtonElement>) {
+    function confirm(e: MouseEvent<HTMLButtonElement>) {
         addProduct(props.product, quantity);
         closeModal(e);
     }
@@ -60,8 +60,8 @@ const CartProductModal: FC<{product:IProduct, onClose:ClickHandler}> = (props): 
                     </div>
                 </div>
                 <div>
-                    <button className="modal-action-button" onClick={(e: React.MouseEvent<HTMLButtonElement>) => confirm(e)}>CONFIRM</button>
-                    <button className="modal-action-button" onClick={(e: React.MouseEvent<HTMLButtonElement>) => closeModal(e)}>CANCEL</button>
+                    <button className="modal-action-button" onClick={(e) => confirm(e)}>CONFIRM</button>
+                    <button className="modal-action-button" onClick={(e) => closeModal(e)}>CANCEL</button>
                 </div>
             </div>
         </div>
