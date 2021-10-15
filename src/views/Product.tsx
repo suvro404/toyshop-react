@@ -1,4 +1,5 @@
 import {useState, useEffect, FC} from 'react'
+import { RouteComponentProps } from 'react-router';
 import {FetchItems} from "../helpers/basic-helpers"
 import '../assets/styles/Product.css'
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -12,7 +13,7 @@ interface MatchParams {
     id: string;
 }
 
-const Product: FC<MatchParams> = (props): JSX.Element => {
+const Product: FC<RouteComponentProps<MatchParams>> = (props): JSX.Element => {
     const [product, setProduct] = useState<Partial<IProduct>>({});
     const [loading, setLoadingStatus] = useState(false);
     const [cartProductModalShow, setCartProductModalShow] = useState(false);
