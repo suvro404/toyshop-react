@@ -10,8 +10,6 @@ function Nav() {
     const {products} = useCart();
     const {authorized, setAuthorized, setCredentials} = useAuth();
 
-    //console.log("authorized : ", authorized);
-
     function isCurrentRoute(routePath:string) {
         return (routePath === loc.pathname ? true : false);
     }

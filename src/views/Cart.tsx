@@ -37,16 +37,16 @@ function Cart() {
                             {
                                 products.map(product => {
                                     return (
-                                        <tr key={product.itemId}>
+                                        <tr key={product.id}>
                                             <td>
-                                                <img src={product.item.images.icon} alt="Avatar" className="cart-item-img" />
-                                                <h4>{product.item.name}</h4>
+                                                <img src={product.imageUrl} alt="Avatar" className="cart-item-img" />
+                                                <h4>{product.name}</h4>
                                             </td>
                                             <td>
-                                                {product.quantity}
+                                                {product.totalQuantity}
                                             </td>
                                             <td>
-                                                {product.price}
+                                                {product.totalPrice}
                                             </td>
                                             <td>
                                                 <button className="cart-table-btn" onClick={() => removeProduct(product)}>
@@ -58,7 +58,7 @@ function Cart() {
                                 })
                             }
                             <tr className="final-result-row">
-                                <td colSpan="2">Total</td>
+                                <td colSpan={2}>Total</td>
                                 <td>{totalPrice}</td>
                                 <td className="btn-container">
                                     <button className="cart-table-btn checkout-btn" onClick={() => checkOut()}>

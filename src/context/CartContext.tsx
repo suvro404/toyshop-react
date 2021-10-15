@@ -22,12 +22,13 @@ export const CartContextProvider: FC<ReactNode> = ({children}) => {
     const providerValues:ContextInterface = {
         products, totalPrice,
         addProduct: (product, quantity) => {
+            let productsClone = [...products];
             if(productExists(products, product)) {
                 let productIdx = getIndexOfExistingProduct(products, product.id);
                 let productToModify:ICartItem = products[productIdx];
                 productToModify.totalQuantity += quantity;
                 productToModify.totalPrice = productToModify.totalQuantity * product.price;
-                products.splice(productIdx, 1, productToModify);
+                productsClone.splice(productIdx, 1, productToModify);
             } else {
                 let newProduct = {
                     id: product.id,
@@ -36,18 +37,22 @@ export const CartContextProvider: FC<ReactNode> = ({children}) => {
                     totalPrice: quantity * product.price,
                     totalQuantity: quantity
                 }
-                products.push(newProduct);
+                productsClone.push(newProduct);
                 
             }
-            setProducts(products);
+            setProducts(productsClone);
+            setTotalPrice(getTotalPrice(productsClone));
         },
         removeProduct: (product) => {
+            let productsClone = [...products];
             let productIdx = getIndexOfExistingProduct(products, product.id);
-            products.splice(productIdx, 1);
-            setProducts(products);
+            productsClone.splice(productIdx, 1);
+            setProducts(productsClone);
+            setTotalPrice(getTotalPrice(productsClone));
         },
         onCheckout: () => {
             setProducts([]);
+            setTotalPrice(0);
         }
 
     };
@@ -73,12 +78,13 @@ function getIndexOfExistingProduct(products:ICartItem[], productId:number) {
     return products.findIndex(p => p.id === productId);
 }
 
-function getTotalPrice(products:IProduct[]) {
-    return products.reduce(function (acc, product) { return acc + product.price; }, 0);
+function getTotalPrice(products:ICartItem[]) {
+    return products.reduce(function (acc, product) { 
+        return (acc + product.totalPrice); 
+    }, 0);
 }
 
 export const useCart = () => {
     let contextValues:ContextInterface | null = useContext<ContextInterface | null>(CartContext);
-    console.log("contextValues : ", contextValues);
     return contextValues as ContextInterface;
 }
