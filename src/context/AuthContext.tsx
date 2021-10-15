@@ -30,7 +30,7 @@ export interface ContextInterface {
 }
 
 export const AuthContextProvider: FC<ReactNode> = ({children}) => {
-    const [authorized, setAuthorized] = useState(false);
+    const [authorized, setAuthorized] = useState(true); //setting true to test
     const [credentials, setCredentials] = useState({email: '', password: ''});
     const [actionName, setActionName] = useState('login');
     const [loading, setLoading] = useState(false);

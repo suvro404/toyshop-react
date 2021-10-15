@@ -116,7 +116,7 @@ const Product: FC<RouteComponentProps<MatchParams>> = (props): JSX.Element => {
                                 </div>
                             </div>
                         </div>
-                        {cartProductModalShow && <CartModal onClose={closeCartProductModal} product={product} />}
+                        {cartProductModalShow && <CartModal onClose={closeCartProductModal} product={product as IProduct} />}
                         {authWarningModalShow && <WarningModal onClose={closeAuthWarningModal} />}
                     </div>
                 )

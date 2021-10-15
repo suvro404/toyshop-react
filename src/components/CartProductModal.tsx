@@ -1,25 +1,28 @@
 import '../assets/styles/CartModal.css';
-import {useState} from 'react'
+import {useState, FC, MouseEvent} from 'react'
 import {useCart} from "../context/CartContext";
+import {IProduct, IKeyable} from "../type"
 
-function CartProductModal(props) {
+type ClickHandler = (event: MouseEvent<HTMLButtonElement>) => void;
+
+const CartProductModal: FC<{product:IProduct, onClose:ClickHandler}> = (props): JSX.Element => {
     const {addProduct} = useCart();
     const [quantity, setQuantity] = useState(1);
 
-    function closeModal() {
-        props.onClose();
+    function closeModal(e: React.MouseEvent<HTMLButtonElement>) {
+        props.onClose(e);
     }
 
-    function confirm() {
+    function confirm(e: React.MouseEvent<HTMLButtonElement>) {
         addProduct(props.product, quantity);
-        closeModal();
+        closeModal(e);
     }
 
-    function onChangeQuantity(inc) {
+    function onChangeQuantity(inc:number) {
         setQuantity(getValidQuantity(quantity, inc));
     }
 
-    function getValidQuantity(quantity, inc) {
+    function getValidQuantity(quantity:number, inc:number) {
         let totalQty = quantity + inc;
         return (totalQty > 0 ? totalQty : quantity);
     }
@@ -29,8 +32,8 @@ function CartProductModal(props) {
             <div className="modal-content-container">
                 <div className="flex-container">
                     <div>
-                        <h1 className="product-title">{props.product.item.name}</h1>
-                        <img src={props.product.item.images.icon} alt="Avatar" className="cart-product-img" />
+                        <h1 className="product-title">{props.product.name}</h1>
+                        <img src={props.product.imageUrl} alt="Avatar" className="cart-product-img" />
                         <table className="purchase-table">
                             <thead>
                             <tr>
@@ -42,7 +45,7 @@ function CartProductModal(props) {
                             <tbody>
                             <tr>
                                 <td>{quantity}</td>
-                                <td>{quantity * props.product.item.cost}</td>
+                                <td>{quantity * props.product.price}</td>
                                 <td className="purchase-table-btn-container">
                                     <button className="purchase-table-btn" onClick={() => onChangeQuantity(1)}>
                                         +
@@ -57,8 +60,8 @@ function CartProductModal(props) {
                     </div>
                 </div>
                 <div>
-                    <button className="modal-action-button" onClick={() => confirm()}>CONFIRM</button>
-                    <button className="modal-action-button" onClick={() => closeModal()}>CANCEL</button>
+                    <button className="modal-action-button" onClick={(e: React.MouseEvent<HTMLButtonElement>) => confirm(e)}>CONFIRM</button>
+                    <button className="modal-action-button" onClick={(e: React.MouseEvent<HTMLButtonElement>) => closeModal(e)}>CANCEL</button>
                 </div>
             </div>
         </div>
