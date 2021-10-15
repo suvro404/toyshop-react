@@ -3,6 +3,7 @@ import {useEffect, FC} from "react";
 import {useAuth} from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 
+
 const AuthResultModal: FC<{msg:string}> = (props): JSX.Element => {
     const {authorized, setShowAuthResultModal} = useAuth();
     const history = useHistory();
