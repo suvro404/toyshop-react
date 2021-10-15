@@ -61,9 +61,9 @@ function getProductWithEssentialProperties(sourceProduct:IKeyable):IProduct {
         imageUrl: sourceProduct.item.images.icon,
         price: getProductPrice(sourceProduct),
         ratings: {
-            avg: sourceProduct.item.avgStars,
-            points: sourceProduct.item.totalPoints,
-            votes: sourceProduct.item.numberVotes,
+            avg: sourceProduct.item.ratings.avgStars,
+            points: sourceProduct.item.ratings.totalPoints,
+            votes: sourceProduct.item.ratings.numberVotes,
         },
         isNew: (sourceProduct.isNew ? sourceProduct.isNew : null),
     }

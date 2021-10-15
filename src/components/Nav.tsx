@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import {Link, useLocation } from "react-router-dom";
-import '../assets/styles/Nav.css';
 import {useCart} from "../context/CartContext";
-import {useAuth} from "../context/AuthContext"
+import {useAuth} from "../context/AuthContext";
+import '../assets/styles/Nav.css';
 
 function Nav() {
     const loc = useLocation();
