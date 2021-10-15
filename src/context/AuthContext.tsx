@@ -10,10 +10,6 @@ export interface ICredentials {
     password: string
 }
 
-const AuthContext = createContext<ContextInterface | null>(null);
-
-const apiPrefix = 'https://reqres.in';
-
 export interface ContextInterface {
     authorized: boolean,
     setAuthorized: SetBooleanFunction,
@@ -28,6 +24,10 @@ export interface ContextInterface {
     showAuthResultModal: boolean,
     setShowAuthResultModal: SetBooleanFunction
 }
+
+const AuthContext = createContext<ContextInterface | null>(null);
+
+const apiPrefix = 'https://reqres.in';
 
 export const AuthContextProvider: FC<ReactNode> = ({children}) => {
     const [authorized, setAuthorized] = useState(true); //setting true to test
