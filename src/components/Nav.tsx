@@ -8,12 +8,12 @@ function Nav() {
     const loc = useLocation();
     const [transparentBg, setTransparentBg] = useState(true);
     const {products} = useCart();
-    const {authorized, setAuthorized, setCredential} = useAuth();
+    const {authorized, setAuthorized, setCredentials} = useAuth();
 
     //console.log("authorized : ", authorized);
 
-    function isCurrentRoute(route) {
-        return (route === loc.pathname ? true : false);
+    function isCurrentRoute(routePath:string) {
+        return (routePath === loc.pathname ? true : false);
     }
 
     const changeNavBgColor = () => {
@@ -26,7 +26,7 @@ function Nav() {
 
     function logout() {
         setAuthorized(false);
-        setCredential({});
+        setCredentials({email: '', password: ''});
     }
 
     useEffect(() => {
