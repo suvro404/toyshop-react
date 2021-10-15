@@ -1,11 +1,16 @@
-export function FetchItems(url, callback) {
+import {ICredentials} from "../context/AuthContext"
+import {IKeyable} from "../type"
+
+type CallbackFunction = (data:IKeyable) => void;
+
+export function FetchItems(url:string, callback:CallbackFunction) {
     fetch(url)
         .then(response => response.json())
         .then(data => callback(data))
         .catch(err => console.log(err));
 }
 
-export function Authenticate(url, queryData, callback) {
+export function Authenticate(url:string, queryData:ICredentials, callback:CallbackFunction) {
     fetch(url,{
         method: "POST",
         headers: {
