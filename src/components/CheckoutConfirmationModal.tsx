@@ -1,6 +1,9 @@
 import '../assets/styles/CheckoutModal.css'
+import {FC, MouseEvent} from "react";
 
-function CheckoutConfirmationModal(props) {
+type ClickHandler = (event: MouseEvent<HTMLButtonElement>) => void;
+
+const CheckoutConfirmationModal: FC<{onClose:ClickHandler}> = (props): JSX.Element => {
     function getTodayDate() {
         let date = new Date();
         let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
