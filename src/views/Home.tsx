@@ -3,7 +3,8 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import {useProducts} from "../context/ProductsContext";
 
 function Home() {
-    const {products, loading} = useProducts("all");
+    const productQueryInfo = {queryType: "product-list", queryData: "all"}
+    const {products, loading} = useProducts(productQueryInfo);
     return (
         <div>
             {

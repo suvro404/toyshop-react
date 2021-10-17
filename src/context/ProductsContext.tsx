@@ -1,17 +1,20 @@
 import React, {useState, createContext, useContext, useEffect, FC, ReactNode} from 'react';
 import {FetchItems} from "../helpers/basic-helpers"
 
-import {SetBooleanFunction, SetStringFunction, IProduct, IKeyable} from '../type'
+import {SetBooleanFunction, SetStringFunction, IProduct, IKeyable, IProductQueryInfo, SetProductQueryInfoFunction} from '../type'
 
 type SetProductsFunction = (a: Array<IProduct>) => void;
+type SetProductFunction = (a: Partial<IProduct>) => void;
 
 interface ContextInterface {
     products: Array<IProduct>,
     setProducts?: SetProductsFunction,
-    productType?: string,
-    setProductType: SetStringFunction,
+    product?: Partial<IProduct>,
+    setProduct?: SetProductFunction,
     loading: boolean,
-    setLoading?: SetBooleanFunction
+    setLoading?: SetBooleanFunction,
+    queryInfo: IProductQueryInfo
+    setQueryInfo: SetProductQueryInfoFunction
 }
 
 const apiPrefix = 'https://fortnite-api.theapinetwork.com';
@@ -19,21 +22,25 @@ const apiPrefix = 'https://fortnite-api.theapinetwork.com';
 const ProductsContext = createContext<ContextInterface | null>(null);
 
 export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
+    const [queryInfo, setQueryInfo] = useState<IProductQueryInfo>({queryType: 'product-list', queryData: 'all'});
     const [products, setProducts] = useState<IProduct[]>([]);
-    const [productType, setProductType] = useState('all');
+    const [product, setProduct] = useState<Partial<IProduct>>({});
     const [loading, setLoading] = useState(false);
 
-    const url = getApiUrl(productType);
+    const providerValues:ContextInterface = {products, product, loading, queryInfo, setQueryInfo};
 
-    const providerValues:ContextInterface = {products, loading, setProductType};
+    const url = getApiUrl(queryInfo);
 
     useEffect(() => {
         setLoading(true);
         FetchItems(url, ((d:any) => {
-            setProducts(getProducts(d.data.slice(0, 50)));
+            if(queryInfo.queryType == "product-list") {
+                setProducts(getProducts(d.data.slice(0, 50)));
+            } else if(queryInfo.queryType == "product") {
+                setProduct(getProductWithEssentialProperties(d.data));
+            }
             setLoading(false);
         }));
-
     }, [url]);
 
     return (
@@ -43,15 +50,21 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
     );
 }
 
-function getApiUrl(productType:string):string {
-    switch (productType) {
-        case 'all': return apiPrefix + '/store/get';
-        case 'popular': return apiPrefix + '/items/list';
-        case 'upcoming': return apiPrefix + '/upcoming/get';
+function getApiUrl(queryInfo:IProductQueryInfo):string {
+    switch (true) {
+        case ((queryInfo.queryType === 'product-list') && (queryInfo.queryData === 'all')):
+            return apiPrefix + '/store/get';
+        case ((queryInfo.queryType === 'product-list') && (queryInfo.queryData === 'popular')):
+            return apiPrefix + '/items/list';
+        case ((queryInfo.queryType === 'product-list') && (queryInfo.queryData === 'upcoming')):
+            return apiPrefix + '/upcoming/get';
+        case (queryInfo.queryType === 'product'):
+            return apiPrefix + '/item/get?id=' + queryInfo.queryData;
 
         default: return apiPrefix + '/store/get';
     }
 }
+
 // source product is received from the server and is used to generate product with essential properties
 function getProductWithEssentialProperties(sourceProduct:IKeyable):IProduct {
     let product : IProduct = {
@@ -86,12 +99,12 @@ function getProducts(sourceProducts:Array<IKeyable>):IProduct[] {
     return products as IProduct[];
 }
 
-export const useProducts = (productType:string) => {
+export const useProducts = (queryInfo: IProductQueryInfo) => {
     let contextValues:ContextInterface | null = useContext<ContextInterface | null>(ProductsContext);
     useEffect(() => {
-        if(contextValues && contextValues.setProductType) {
-            contextValues.setProductType(productType);
+        if(contextValues && contextValues.setQueryInfo) {
+            contextValues.setQueryInfo(queryInfo);
         }
-    }, [productType]);
+    }, [queryInfo.queryData]);
     return contextValues as ContextInterface;
 };

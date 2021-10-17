@@ -3,7 +3,8 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import {useProducts} from "../context/ProductsContext";
 
 function Popular() {
-    const {products, loading} = useProducts("popular");
+    const productQueryInfo = {queryType: "product-list", queryData: "popular"}
+    const {products, loading} = useProducts(productQueryInfo);
     return (
         <div>
             {

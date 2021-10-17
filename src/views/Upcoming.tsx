@@ -3,7 +3,8 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import {useProducts} from "../context/ProductsContext";
 
 function Upcoming() {
-    const {products, loading} = useProducts("upcoming");
+    const productQueryInfo = {queryType: "product-list", queryData: "upcoming"}
+    const {products, loading} = useProducts(productQueryInfo);
     return (
         <div>
             {
