@@ -47,25 +47,24 @@ export const AuthContextProvider: FC<ReactNode> = ({children}) => {
 
 function authenticateUser(ctxValues:ContextInterface) {
     let url = apiPrefix + "/api/"+ ctxValues.actionName;
-    Authenticate(url, ctxValues.credentials, ((d:any) => {
+    Authenticate(url, ctxValues.credentials).then(d => {
+        ctxValues.actionName === 'login' ? (
+            ctxValues.setAuthorized(true),
+            ctxValues.setAuthMsg('Log in Successful!')
+        ) : (
+            ctxValues.setAuthMsg('Sign Up Successful. Please log in to continue.')
+        );
+    }).catch(err => {
+        //console.log("Error : ", err);
+        ctxValues.actionName === 'login' ? (
+            ctxValues.setAuthMsg('Log in Failed!')
+        ) : (
+            ctxValues.setAuthMsg('Sign Up Failed')
+        );
+    }).finally(() => {
         ctxValues.setLoading(false);
-        //actionName === 'login' ? (d.token ? setAuthorized(true) : setAuthorized(false)):(setAuthorized(false));
-        if(ctxValues.actionName === 'login') {
-            if(d.token) {
-                ctxValues.setAuthorized(true);
-                ctxValues.setAuthMsg('Log in successful!');
-            } else {
-                ctxValues.setAuthMsg('Log in failed!');
-            }
-        } else {
-            if(d.id) {
-                ctxValues.setAuthMsg('Sign Up Successful. Please log in to continue.');
-            } else {
-                ctxValues.setAuthMsg('Sign Up failed!');
-            }
-        }
         ctxValues.setShowAuthResultModal(true);
-    }));
+    });
 }
 
 function isValidCredentail(creds:ICredentials) {

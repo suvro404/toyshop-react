@@ -1,14 +1,13 @@
-import {useState, useEffect, FC} from 'react'
-import { RouteComponentProps } from 'react-router';
-import {FetchItems} from "../helpers/basic-helpers"
-import '../assets/styles/Product.css'
+import '../assets/styles/Product.css';
+import {useState, FC} from 'react'
+import {RouteComponentProps} from 'react-router';
 import LoadingSpinner from "../components/LoadingSpinner";
 import CartModal from "../components/CartProductModal";
-import {useAuth} from "../context/AuthContext"
 import WarningModal from "../components/AuthWarningModal";
-import {useHistory} from "react-router-dom";
-import {IProduct, IKeyable} from "../type"
+import {useAuth} from "../context/AuthContext"
 import {useProducts} from "../context/ProductsContext"
+import {useHistory} from "react-router-dom";
+import {IProduct} from "../type"
 
 interface MatchParams {
     id: string;
@@ -24,7 +23,7 @@ const Product: FC<RouteComponentProps<MatchParams>> = (props): JSX.Element => {
     const openModal = () => {
         authorized ? (setCartProductModalShow(true)) : (setAuthWarningModalShow(true));
     };
-    const closeCartProductModal = ()=>{
+    const closeCartProductModal = () => {
         setCartProductModalShow(false);
     }
 

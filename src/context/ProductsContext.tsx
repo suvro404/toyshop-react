@@ -33,14 +33,17 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
 
     useEffect(() => {
         setLoading(true);
-        FetchItems(url, ((d:any) => {
+        FetchItems(url).then((d:any) => {
             if(queryInfo.queryType == "product-list") {
                 setProducts(getProducts(d.data.slice(0, 50)));
             } else if(queryInfo.queryType == "product") {
                 setProduct(getProductWithEssentialProperties(d.data));
             }
+        }).catch(err => {
+            console.error(err); // take actions depending on this error
+        }).finally(() => {
             setLoading(false);
-        }));
+        });
     }, [url]);
 
     return (

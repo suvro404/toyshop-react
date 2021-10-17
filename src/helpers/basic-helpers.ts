@@ -1,24 +1,28 @@
 import {ICredentials} from "../context/AuthContext"
 import {IKeyable} from "../type"
 
-type CallbackFunction = (data:IKeyable) => void;
-
-export function FetchItems(url:string, callback:CallbackFunction) {
-    fetch(url)
+export function FetchItems(url:string) {
+    return fetch(url)
         .then(response => response.json())
-        .then(data => callback(data))
-        .catch(err => console.log(err));
+        .catch(err => {throw err});
 }
 
-export function Authenticate(url:string, queryData:ICredentials, callback:CallbackFunction) {
-    fetch(url,{
+export function Authenticate(url:string, queryData:ICredentials) {
+    return fetch(url,{
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({email: queryData.email, password: queryData.password})
     })
-        .then(response => response.json())
-        .then(data => callback(data))
-        .catch(err => console.log("error : ", err));
+    .then(status)
+    .then(response => response.json())
+    .catch(err => {throw err});
+}
+
+function status(res:IKeyable) {
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
+    return res;
 }
