@@ -30,7 +30,7 @@ const AuthContext = createContext<ContextInterface | null>(null);
 const apiPrefix = 'https://reqres.in';
 
 export const AuthContextProvider: FC<ReactNode> = ({children}) => {
-    const [authorized, setAuthorized] = useState(false);
+    const [authorized, setAuthorized] = useState(true);
     const [credentials, setCredentials] = useState({email: '', password: ''});
     const [actionName, setActionName] = useState('login');
     const [loading, setLoading] = useState(false);
@@ -48,19 +48,19 @@ export const AuthContextProvider: FC<ReactNode> = ({children}) => {
 function authenticateUser(ctxValues:ContextInterface) {
     let url = apiPrefix + "/api/"+ ctxValues.actionName;
     Authenticate(url, ctxValues.credentials).then(d => {
-        ctxValues.actionName === 'login' ? (
-            ctxValues.setAuthorized(true),
-            ctxValues.setAuthMsg('Log in Successful!')
-        ) : (
-            ctxValues.setAuthMsg('Sign Up Successful. Please log in to continue.')
-        );
+        if(ctxValues.actionName === 'login') {
+            ctxValues.setAuthorized(true);
+            ctxValues.setAuthMsg('Log in Successful!');
+        } else if(ctxValues.actionName === 'signup') {
+            ctxValues.setAuthMsg('Sign Up Successful. Please log in to continue.');
+        }
     }).catch(err => {
         //console.log("Error : ", err);
-        ctxValues.actionName === 'login' ? (
-            ctxValues.setAuthMsg('Log in Failed!')
-        ) : (
-            ctxValues.setAuthMsg('Sign Up Failed')
-        );
+        if(ctxValues.actionName === 'login') {
+            ctxValues.setAuthMsg('Log in Failed!');
+        } else if(ctxValues.actionName === 'signup') {
+            ctxValues.setAuthMsg('Sign Up Failed');
+        }
     }).finally(() => {
         ctxValues.setLoading(false);
         ctxValues.setShowAuthResultModal(true);

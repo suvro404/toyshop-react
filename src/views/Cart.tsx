@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 function Cart() {
     const history = useHistory();
-    const {products, removeProduct, onCheckout, totalPrice} = useCart();
+    const {products, onRemoveProduct, onCheckout, totalPrice} = useCart();
     const [modalShow, setModalShow] = useState(false);
 
     function checkOut() {
@@ -49,7 +49,7 @@ function Cart() {
                                                 {product.totalPrice}
                                             </td>
                                             <td>
-                                                <button className="cart-table-btn" onClick={() => removeProduct(product)}>
+                                                <button className="cart-table-btn" onClick={() => onRemoveProduct(product)}>
                                                     REMOVE
                                                 </button>
                                             </td>

@@ -6,7 +6,7 @@ import {IProduct, IKeyable} from "../type"
 type ClickHandler = (event: MouseEvent<HTMLButtonElement>) => void;
 
 const CartProductModal: FC<{product:IProduct, onClose:ClickHandler}> = (props): JSX.Element => {
-    const {addProduct} = useCart();
+    const {onAddProduct} = useCart();
     const [quantity, setQuantity] = useState(1);
 
     function closeModal(e: MouseEvent<HTMLButtonElement>) {
@@ -14,7 +14,7 @@ const CartProductModal: FC<{product:IProduct, onClose:ClickHandler}> = (props): 
     }
 
     function confirm(e: MouseEvent<HTMLButtonElement>) {
-        addProduct(props.product, quantity);
+        onAddProduct(props.product, quantity);
         closeModal(e);
     }
 

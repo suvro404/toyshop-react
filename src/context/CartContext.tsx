@@ -1,15 +1,16 @@
+import { resolve } from 'path/posix';
 import {useState, createContext, useContext, FC, ReactNode} from 'react';
 import {IProduct, ICartItem} from '../type'
 
-type AddProductFunction = (product: IProduct, quantity: number) => void;
-type RemoveProductFunction = (product: ICartItem) => void;
+type OnAddProductFunction = (product: IProduct, quantity: number) => void;
+type OnRemoveProductFunction = (product: ICartItem) => void;
 type OnCheckoutFunction = () => void;
 
 interface ContextInterface {
     products: Array<ICartItem>,
     totalPrice: number,
-    addProduct: AddProductFunction,
-    removeProduct: RemoveProductFunction,
+    onAddProduct: OnAddProductFunction,
+    onRemoveProduct: OnRemoveProductFunction,
     onCheckout: OnCheckoutFunction
 }
 
@@ -21,34 +22,21 @@ export const CartContextProvider: FC<ReactNode> = ({children}) => {
 
     const providerValues:ContextInterface = {
         products, totalPrice,
-        addProduct: (product, quantity) => {
-            let productsClone = [...products];
-            if(productExists(products, product)) {
-                let productIdx = getIndexOfExistingProduct(products, product.id);
-                let productToModify:ICartItem = products[productIdx];
-                productToModify.totalQuantity += quantity;
-                productToModify.totalPrice = productToModify.totalQuantity * product.price;
-                productsClone.splice(productIdx, 1, productToModify);
-            } else {
-                let newProduct = {
-                    id: product.id,
-                    name: product.name,
-                    imageUrl: product.imageUrl,
-                    totalPrice: quantity * product.price,
-                    totalQuantity: quantity
-                }
-                productsClone.push(newProduct);
-                
-            }
-            setProducts(productsClone);
-            setTotalPrice(getTotalPrice(productsClone));
+        onAddProduct: (product, quantity) => {
+            addProduct(products, product, quantity).then((productList:ICartItem[]) => {
+                setProducts(productList);
+                setTotalPrice(getTotalPrice(productList));
+            }).catch((err) =>{
+                console.log("Error occurred while adding item to cart : ", err); // take actions dependeing on this error
+            })
         },
-        removeProduct: (product) => {
-            let productsClone = [...products];
-            let productIdx = getIndexOfExistingProduct(products, product.id);
-            productsClone.splice(productIdx, 1);
-            setProducts(productsClone);
-            setTotalPrice(getTotalPrice(productsClone));
+        onRemoveProduct: (product) => {
+            removeProduct(products, product).then((productList:ICartItem[]) => {
+                setProducts(productList);
+                setTotalPrice(getTotalPrice(productList));
+            }).catch((err) =>{
+                console.log("Error occurred while removing item form cart : ", err); // take actions dependeing on this error
+            })
         },
         onCheckout: () => {
             setProducts([]);
@@ -64,6 +52,45 @@ export const CartContextProvider: FC<ReactNode> = ({children}) => {
     );
 }
 
+function removeProduct(products:ICartItem[], product:ICartItem):Promise<ICartItem[]> {
+    return new Promise((resolve, reject) => {
+        let productsClone = [...products];
+        let productIdx = getIndexOfExistingProduct(products, product.id);
+        try {
+            productsClone.splice(productIdx, 1); // this is demo purpose. Here rest api will be called.
+            resolve(productsClone); // result is received from server and resolved if successful
+        } catch(err) {
+            reject(err); // result is received from server and rejected if failed
+        }
+    })
+}
+
+function addProduct(products:ICartItem[], product:IProduct, quantity: number):Promise<ICartItem[]> {
+    return new Promise((resolve, reject) => {
+        let productsClone = [...products];
+        try {
+            if(productExists(products, product)) {
+                let productIdx = getIndexOfExistingProduct(products, product.id);
+                let productToModify:ICartItem = products[productIdx];
+                productToModify.totalQuantity += quantity;
+                productToModify.totalPrice = productToModify.totalQuantity * product.price;
+                productsClone.splice(productIdx, 1, productToModify); // this is demo purpose. Here rest api will be called.
+            } else {
+                let newProduct = {
+                    id: product.id,
+                    name: product.name,
+                    imageUrl: product.imageUrl,
+                    totalPrice: quantity * product.price,
+                    totalQuantity: quantity
+                }
+                productsClone.push(newProduct); // this is demo purpose. Here rest api will be called.
+            }
+            resolve(productsClone); // result is received from server and resolved if successful
+        } catch(err) {
+            reject(err); // result is received from server and rejected if failed
+        }
+    })
+}
 
 function productExists(products:ICartItem[], product:IProduct) {
     if(!products.length) {
