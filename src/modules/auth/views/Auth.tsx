@@ -1,9 +1,9 @@
 import { useEffect, useState, useReducer, ChangeEvent } from 'react'
 import '../styles/Auth.css'
-import {useAuth, ICredentials} from "../contexts/AuthContext";
+import {useAuth} from "../contexts/AuthContext";
 import LoadingSpinner from "../../../libs/loading-spinner/LoadingSpinner";
 import AuthResultModal from "../components/AuthResultModal";
-import {IKeyable} from "../../../type"
+import {IKeyable, ICredentials} from "../../../type"
 
 
 function Auth() {

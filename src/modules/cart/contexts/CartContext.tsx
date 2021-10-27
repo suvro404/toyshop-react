@@ -1,6 +1,7 @@
 import { resolve } from 'path/posix';
 import {useState, createContext, useContext, FC, ReactNode} from 'react';
-import {IProduct, ICartItem} from '../../../type'
+import {IProduct} from '../../../type'
+import {ICartItem} from '../types/cart.type'
 
 type OnAddProductFunction = (product: IProduct, quantity: number) => void;
 type OnRemoveProductFunction = (product: ICartItem) => void;

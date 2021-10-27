@@ -1,0 +1,1 @@
+export type SetCredentialsFunction = (a: ICredentials) => void;

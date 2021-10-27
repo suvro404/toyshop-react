@@ -1,7 +1,8 @@
 import React, {useState, createContext, useContext, useEffect, FC, ReactNode} from 'react';
-import {FetchItems} from "../../../helpers/basic-helpers"
+import ApiService from '../../../api/ApiService';
 
-import {SetBooleanFunction, SetStringFunction, IProduct, IKeyable, IProductQueryInfo, SetProductQueryInfoFunction} from '../../../type'
+import {SetBooleanFunction, SetStringFunction, IProduct, IKeyable} from '../../../type';
+import {SetProductQueryInfoFunction, IProductQueryInfo} from '../types/products.type'
 
 type SetProductsFunction = (a: Array<IProduct>) => void;
 type SetProductFunction = (a: Partial<IProduct>) => void;
@@ -29,11 +30,14 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
 
     const providerValues:ContextInterface = {products, product, loading, queryInfo, setQueryInfo};
 
-    const url = getApiUrl(queryInfo);
+    const apiQueryInfo = getApiQueryInfo(queryInfo);
 
     useEffect(() => {
         setLoading(true);
-        FetchItems(url).then((d:any) => {
+
+        const apiService = new ApiService("products");
+
+        apiService.fetchItems(apiQueryInfo).then((d:any) => {
             if(queryInfo.queryType == "product-list") {
                 setProducts(getProducts(d.data.slice(0, 50)));
             } else if(queryInfo.queryType == "product") {
@@ -44,7 +48,7 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
         }).finally(() => {
             setLoading(false);
         });
-    }, [url]);
+    }, [apiQueryInfo]);
 
     return (
         <ProductsContext.Provider value={providerValues}>
@@ -53,18 +57,18 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
     );
 }
 
-function getApiUrl(queryInfo:IProductQueryInfo):string {
+function getApiQueryInfo(queryInfo:IProductQueryInfo):string {
     switch (true) {
         case ((queryInfo.queryType === 'product-list') && (queryInfo.queryData === 'all')):
-            return apiPrefix + '/store/get';
+            return 'store/get';
         case ((queryInfo.queryType === 'product-list') && (queryInfo.queryData === 'popular')):
-            return apiPrefix + '/items/list';
+            return 'items/list';
         case ((queryInfo.queryType === 'product-list') && (queryInfo.queryData === 'upcoming')):
-            return apiPrefix + '/upcoming/get';
+            return 'upcoming/get';
         case (queryInfo.queryType === 'product'):
-            return apiPrefix + '/item/get?id=' + queryInfo.queryData;
+            return 'item/get?id=' + queryInfo.queryData;
 
-        default: return apiPrefix + '/store/get';
+        default: return 'store/get';
     }
 }
 

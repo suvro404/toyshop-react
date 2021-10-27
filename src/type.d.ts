@@ -2,7 +2,6 @@ export type SetBooleanFunction = (a: boolean) => void;
 export type SetStringFunction = (a: string) => void;
 export type SetObjectFunction = (a: object) => void;
 export type SetAarrayFunction = (a: Array<object>) => void;
-export type SetProductQueryInfoFunction = (a: IProductQueryInfo) => void;
 
 export interface IKeyable {
     [key: string]: any;  
@@ -23,16 +22,9 @@ export interface IProduct {
     store?: IKeyable
 }
 
-export interface ICartItem {
-    id: number,
-    name: string,
-    imageUrl: string,
-    totalPrice: number,
-    totalQuantity: number
+export interface ICredentials {
+    email: string,
+    password: string
 }
 
-export interface IProductQueryInfo {
-    queryType: string,
-    queryData: string
-}
 

@@ -1,14 +1,9 @@
 import {useState, createContext, useContext, FC, ReactNode} from 'react';
-import {Authenticate} from "../../../helpers/basic-helpers";
+import ApiService from '../../../api/ApiService';
 
-import {SetBooleanFunction, SetStringFunction} from '../../../type'
+import {SetBooleanFunction, SetStringFunction, ICredentials} from '../../../type'
+import {SetCredentialsFunction} from '../types/auth.type'
 
-type SetCredentialsFunction = (a: ICredentials) => void;
-
-export interface ICredentials {
-    email: string,
-    password: string
-}
 
 export interface ContextInterface {
     authorized: boolean,
@@ -46,8 +41,10 @@ export const AuthContextProvider: FC<ReactNode> = ({children}) => {
 }
 
 function authenticateUser(ctxValues:ContextInterface) {
-    let url = apiPrefix + "/api/"+ ctxValues.actionName;
-    Authenticate(url, ctxValues.credentials).then(d => {
+    let apiQ = ctxValues.actionName;
+
+    const apiService = new ApiService("auth");
+    apiService.authenticate(ctxValues.actionName, ctxValues.credentials).then(d => {
         if(ctxValues.actionName === 'login') {
             ctxValues.setAuthorized(true);
             ctxValues.setAuthMsg('Log in Successful!');
