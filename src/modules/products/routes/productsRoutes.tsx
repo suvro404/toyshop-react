@@ -5,7 +5,7 @@ import {Route} from "react-router-dom";
 
 export const productsRoutes = (
   <div>
-    <Route path='/product-list/:type' component={ProductList}></Route>
+    <Route path='/products/:type' component={ProductList}></Route>
     <Route path='/product/:id' component={Product}></Route>
   </div>
 )

@@ -40,18 +40,18 @@ function Nav() {
                 <i><span className="highlighted">toy</span>Shop</i>
             </div>
             <ul className="nav-links">
-                <Link to='/product-list/all' className="link-name">
-                    <li className={ isCurrentRoute('/product-list/all') ? 'active' : 'in-active' }>
-                        Home
+                <Link to='/products/trending' className="link-name">
+                    <li className={ isCurrentRoute('/products/trending') ? 'active' : 'in-active' }>
+                        Trending
                     </li>
                 </Link>
-                <Link to='/product-list/popular' className="link-name">
-                    <li className={ isCurrentRoute('/product-list/popular') ? 'active' : 'in-active' }>
+                <Link to='/products/popular' className="link-name">
+                    <li className={ isCurrentRoute('/products/popular') ? 'active' : 'in-active' }>
                         Popular
                     </li>
                 </Link>
-                <Link to='/product-list/upcoming' className="link-name">
-                    <li className={ isCurrentRoute('/product-list/upcoming') ? 'active' : 'in-active' }>
+                <Link to='/products/upcoming' className="link-name">
+                    <li className={ isCurrentRoute('/products/upcoming') ? 'active' : 'in-active' }>
                         Upcoming
                     </li>
                 </Link>

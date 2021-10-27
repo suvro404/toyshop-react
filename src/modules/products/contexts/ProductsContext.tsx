@@ -18,12 +18,10 @@ interface ContextInterface {
     setQueryInfo: SetProductQueryInfoFunction
 }
 
-const apiPrefix = 'https://fortnite-api.theapinetwork.com';
-
 const ProductsContext = createContext<ContextInterface | null>(null);
 
 export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
-    const [queryInfo, setQueryInfo] = useState<IProductQueryInfo>({queryType: 'product-list', queryData: 'all'});
+    const [queryInfo, setQueryInfo] = useState<IProductQueryInfo>({queryType: 'products', queryData: 'trending'});
     const [products, setProducts] = useState<IProduct[]>([]);
     const [product, setProduct] = useState<Partial<IProduct>>({});
     const [loading, setLoading] = useState(false);
@@ -38,7 +36,7 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
         const apiService = new ApiService("products");
 
         apiService.fetchItems(apiQueryInfo).then((d:any) => {
-            if(queryInfo.queryType == "product-list") {
+            if(queryInfo.queryType == "products") {
                 setProducts(getProducts(d.data.slice(0, 50)));
             } else if(queryInfo.queryType == "product") {
                 setProduct(getProductWithEssentialProperties(d.data));
@@ -59,11 +57,11 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
 
 function getApiQueryInfo(queryInfo:IProductQueryInfo):string {
     switch (true) {
-        case ((queryInfo.queryType === 'product-list') && (queryInfo.queryData === 'all')):
+        case ((queryInfo.queryType === 'products') && (queryInfo.queryData === 'trending')):
             return 'store/get';
-        case ((queryInfo.queryType === 'product-list') && (queryInfo.queryData === 'popular')):
+        case ((queryInfo.queryType === 'products') && (queryInfo.queryData === 'popular')):
             return 'items/list';
-        case ((queryInfo.queryType === 'product-list') && (queryInfo.queryData === 'upcoming')):
+        case ((queryInfo.queryType === 'products') && (queryInfo.queryData === 'upcoming')):
             return 'upcoming/get';
         case (queryInfo.queryType === 'product'):
             return 'item/get?id=' + queryInfo.queryData;
