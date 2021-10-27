@@ -1,4 +1,4 @@
-import {ICredentials} from "../context/AuthContext"
+import {ICredentials} from "../modules/auth/contexts/AuthContext"
 import {IKeyable} from "../type"
 
 export function FetchItems(url:string) {

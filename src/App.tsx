@@ -1,17 +1,12 @@
 import './App.css';
-import Nav from "./components/Nav";
-import Home from "./views/Home";
-import Popular from "./views/Popular";
-import Upcoming from "./views/Upcoming";
-import Product from "./views/Product";
-import Cart from "./views/Cart";
-import Auth from "./views/Auth";
-import Test from "./views/Test";
+import Nav from "./modules/common/components/Nav";
 
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import {ProductsContextProvider} from "./context/ProductsContext";
-import {CartContextProvider} from "./context/CartContext";
-import {AuthContextProvider} from "./context/AuthContext";
+import {BrowserRouter as Router, Switch} from "react-router-dom";
+import {ProductsContextProvider} from "./modules/products/contexts/ProductsContext";
+import {CartContextProvider} from "./modules/cart/contexts/CartContext";
+import {AuthContextProvider} from "./modules/auth/contexts/AuthContext";
+
+import { appRoutes } from './routes/routes';
 
 function App() {
     return (
@@ -22,13 +17,7 @@ function App() {
                         <div className="App">
                             <Nav />
                             <Switch>
-                                <Route path={process.env.PUBLIC_URL + '/'} exact component={Home} />
-                                <Route path={process.env.PUBLIC_URL + '/popular'} component={Popular} />
-                                <Route path={process.env.PUBLIC_URL + '/upcoming'} component={Upcoming} />
-                                <Route path={process.env.PUBLIC_URL + '/product/:id'} component={Product} />
-                                <Route path={process.env.PUBLIC_URL + '/cart'} component={Cart} />
-                                <Route path={process.env.PUBLIC_URL + '/auth'} component={Auth} />
-                                <Route path={process.env.PUBLIC_URL + '/test'} component={Test} />
+                                {appRoutes}
                             </Switch>
                         </div>
                     </Router>
