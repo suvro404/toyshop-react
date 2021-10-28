@@ -1,7 +1,7 @@
-import '../styles/CartProductModal.css';
+import 'modules/cart/styles/CartProductModal.css';
 import {useState, FC, MouseEvent} from 'react'
-import {useCart} from "../contexts/CartContext";
-import {IProduct, IKeyable} from "../../../type"
+import {useCart} from "modules/cart/contexts/CartContext";
+import {IProduct} from "type.common"
 
 type ClickHandler = (event: MouseEvent<HTMLButtonElement>) => void;
 

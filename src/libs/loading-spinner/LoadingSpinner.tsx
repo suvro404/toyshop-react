@@ -1,4 +1,4 @@
-import './LoadingSpinner.css'
+import 'libs/loading-spinner/LoadingSpinner.css'
 
 function LoadingSpinner() {
     return (

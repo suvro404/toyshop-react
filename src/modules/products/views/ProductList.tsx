@@ -1,8 +1,8 @@
-import {useState, FC} from 'react'
+import {FC} from 'react'
 import {RouteComponentProps} from 'react-router';
-import LoadingSpinner from "../../../libs/loading-spinner/LoadingSpinner";
-import {useProducts} from "../contexts/ProductsContext"
-import ProductListItem from "../components/ProductListItem"
+import LoadingSpinner from "libs/loading-spinner/LoadingSpinner";
+import {useProducts} from "modules/products/contexts/ProductsContext"
+import ProductListItem from "modules/products/components/ProductListItem"
 
 interface MatchRouteParams {
     type: string;

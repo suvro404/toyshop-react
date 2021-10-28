@@ -1,4 +1,4 @@
-import Auth from "../views/Auth";
+import Auth from "modules/auth/views/Auth";
 
 import {Route} from "react-router-dom";
 

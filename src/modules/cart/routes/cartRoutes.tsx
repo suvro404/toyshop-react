@@ -1,4 +1,4 @@
-import Cart from "../views/Cart";
+import Cart from "modules/cart/views/Cart";
 
 import {Route} from "react-router-dom";
 

@@ -1,4 +1,4 @@
-import '../styles/AuthWarningModal.css'
+import 'modules/auth/styles/AuthWarningModal.css'
 import {FC, MouseEvent} from "react";
 
 type ClickHandler = (event: MouseEvent<HTMLButtonElement>) => void;

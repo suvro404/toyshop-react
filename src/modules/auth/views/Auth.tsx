@@ -1,9 +1,9 @@
-import { useEffect, useState, useReducer, ChangeEvent } from 'react'
-import '../styles/Auth.css'
-import {useAuth} from "../contexts/AuthContext";
-import LoadingSpinner from "../../../libs/loading-spinner/LoadingSpinner";
-import AuthResultModal from "../components/AuthResultModal";
-import {IKeyable, ICredentials} from "../../../type"
+import { useState, useReducer, ChangeEvent } from 'react';
+import 'modules/auth/styles/Auth.css';
+import {useAuth} from "modules/auth/contexts/AuthContext";
+import LoadingSpinner from "libs/loading-spinner/LoadingSpinner";
+import AuthResultModal from "modules/auth/components/AuthResultModal";
+import {IKeyable, ICredentials} from "type.common";
 
 
 function Auth() {

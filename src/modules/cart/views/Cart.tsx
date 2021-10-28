@@ -1,6 +1,6 @@
-import '../styles/Cart.css'
-import {useCart} from "../contexts/CartContext";
-import CheckoutConfirmationModal from "../components/CheckoutConfirmationModal";
+import 'modules/cart/styles/Cart.css'
+import {useCart} from "modules/cart/contexts/CartContext";
+import CheckoutConfirmationModal from "modules/cart/components/CheckoutConfirmationModal";
 import {useState} from "react";
 import { useHistory } from "react-router-dom";
 

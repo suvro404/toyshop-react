@@ -1,8 +1,7 @@
-import '../styles/AuthResultModal.css'
+import 'modules/auth/styles/AuthResultModal.css'
 import {useEffect, FC} from "react";
-import {useAuth} from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-
+import {useAuth} from "modules/auth/contexts/AuthContext";
 
 const AuthResultModal: FC<{msg:string}> = (props): JSX.Element => {
     const {authorized, setShowAuthResultModal} = useAuth();
@@ -13,7 +12,7 @@ const AuthResultModal: FC<{msg:string}> = (props): JSX.Element => {
         return () => {
             window.removeEventListener('click', onRemoveModal);
         }
-    }, []);
+    });
 
     function onRemoveModal() {
         setShowAuthResultModal(false);
@@ -22,7 +21,7 @@ const AuthResultModal: FC<{msg:string}> = (props): JSX.Element => {
 
     function goToHome() {
         if(authorized) {
-            history.push(`${process.env.PUBLIC_URL}/`);
+            history.push('/');
         }
     }
 

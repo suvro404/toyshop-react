@@ -1,4 +1,4 @@
-import {ICredentials, IKeyable} from "../type"
+import {ICredentials, IKeyable} from "type.common";
 
 const productsApiHost = 'https://fortnite-api.theapinetwork.com';
 const authApiHost = 'https://reqres.in';

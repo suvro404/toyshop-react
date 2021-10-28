@@ -1,13 +1,13 @@
-import '../styles/Product.css';
+import 'modules/products/styles/Product.css';
 import {useState, FC} from 'react'
 import {RouteComponentProps} from 'react-router';
-import LoadingSpinner from "../../../libs/loading-spinner/LoadingSpinner";
-import CartModal from "../../cart/components/CartProductModal";
-import WarningModal from "../../auth/components/AuthWarningModal";
-import {useAuth} from "../../auth/contexts/AuthContext"
-import {useProducts} from "../contexts/ProductsContext"
+import LoadingSpinner from "libs/loading-spinner/LoadingSpinner";
+import CartModal from "modules/cart/components/CartProductModal";
+import WarningModal from "modules/auth/components/AuthWarningModal";
+import {useAuth} from "modules/auth/contexts/AuthContext"
+import {useProducts} from "modules/products/contexts/ProductsContext"
 import {useHistory} from "react-router-dom";
-import {IProduct} from "../../../type"
+import {IProduct} from "type.common"
 
 interface MatchRouteParams {
     id: string;
@@ -16,7 +16,7 @@ interface MatchRouteParams {
 const Product: FC<RouteComponentProps<MatchRouteParams>> = (props): JSX.Element => {
     const [cartProductModalShow, setCartProductModalShow] = useState(false);
     const [authWarningModalShow, setAuthWarningModalShow] = useState(false);
-    const {authorized, setAuthorized} = useAuth();
+    const {authorized} = useAuth();
     const {product, loading} = useProducts({queryType: "product", queryData: props.match.params.id});
     const history = useHistory();
 

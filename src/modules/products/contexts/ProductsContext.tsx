@@ -1,11 +1,9 @@
 import React, {useState, createContext, useContext, useEffect, FC, ReactNode} from 'react';
-import ApiService from '../../../api/ApiService';
+import ApiService from 'api/ApiService';
 
-import {SetBooleanFunction, SetStringFunction, IProduct, IKeyable} from '../../../type';
-import {SetProductQueryInfoFunction, IProductQueryInfo} from '../types/products.type'
+import {SetBooleanFunction, IProduct, IKeyable} from 'type.common';
+import {SetProductQueryInfoFunction, SetProductsFunction, SetProductFunction, IProductQueryInfo} from 'modules/products/types/products.type'
 
-type SetProductsFunction = (a: Array<IProduct>) => void;
-type SetProductFunction = (a: Partial<IProduct>) => void;
 
 interface ContextInterface {
     products: Array<IProduct>,
@@ -36,9 +34,9 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
         const apiService = new ApiService("products");
 
         apiService.fetchItems(apiQueryInfo).then((d:any) => {
-            if(queryInfo.queryType == "products") {
+            if(queryInfo.queryType === "products") {
                 setProducts(getProducts(d.data.slice(0, 50)));
-            } else if(queryInfo.queryType == "product") {
+            } else if(queryInfo.queryType === "product") {
                 setProduct(getProductWithEssentialProperties(d.data));
             }
         }).catch(err => {
@@ -46,7 +44,7 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
         }).finally(() => {
             setLoading(false);
         });
-    }, [apiQueryInfo]);
+    }, [apiQueryInfo, queryInfo.queryType, queryInfo.queryData]);
 
     return (
         <ProductsContext.Provider value={providerValues}>

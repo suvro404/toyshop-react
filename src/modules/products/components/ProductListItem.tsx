@@ -1,7 +1,7 @@
-import {useState, useEffect, FC} from 'react'
+import {FC} from 'react'
 import { useHistory } from "react-router-dom";
-import '../styles/ProductListItem.css';
-import {IProduct} from "../../../type"
+import 'modules/products/styles/ProductListItem.css';
+import {IProduct} from "type.common"
 
 const ProductListItem: FC<{product:IProduct}> = (props): JSX.Element => {
     const history = useHistory();

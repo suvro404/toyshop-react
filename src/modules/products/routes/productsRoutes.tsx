@@ -1,5 +1,5 @@
-import ProductList from "../views/ProductList";
-import Product from "../views/Product";
+import ProductList from "modules/products/views/ProductList";
+import Product from "modules/products/views/Product";
 
 import {Route} from "react-router-dom";
 

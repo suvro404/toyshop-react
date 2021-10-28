@@ -1,8 +1,8 @@
 import {useState, createContext, useContext, FC, ReactNode} from 'react';
-import ApiService from '../../../api/ApiService';
+import ApiService from 'api/ApiService';
 
-import {SetBooleanFunction, SetStringFunction, ICredentials} from '../../../type'
-import {SetCredentialsFunction} from '../types/auth.type'
+import {SetBooleanFunction, SetStringFunction, ICredentials} from 'type.common'
+import {SetCredentialsFunction} from 'modules/auth/types/auth.type'
 
 
 export interface ContextInterface {
@@ -22,8 +22,6 @@ export interface ContextInterface {
 
 const AuthContext = createContext<ContextInterface | null>(null);
 
-const apiPrefix = 'https://reqres.in';
-
 export const AuthContextProvider: FC<ReactNode> = ({children}) => {
     const [authorized, setAuthorized] = useState(true);
     const [credentials, setCredentials] = useState({email: '', password: ''});
@@ -41,8 +39,6 @@ export const AuthContextProvider: FC<ReactNode> = ({children}) => {
 }
 
 function authenticateUser(ctxValues:ContextInterface) {
-    let apiQ = ctxValues.actionName;
-
     const apiService = new ApiService("auth");
     apiService.authenticate(ctxValues.actionName, ctxValues.credentials).then(d => {
         if(ctxValues.actionName === 'login') {
