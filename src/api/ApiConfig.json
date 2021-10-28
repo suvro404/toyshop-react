@@ -1,0 +1,6 @@
+{
+    "host": {
+        "productsApiHost": "https://fortnite-api.theapinetwork.com",
+        "authApiHost": "https://reqres.in"
+    }
+}

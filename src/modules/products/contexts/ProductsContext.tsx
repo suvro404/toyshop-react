@@ -33,11 +33,11 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
 
         const apiService = new ApiService("products");
 
-        apiService.fetchItems(apiQueryInfo).then((d:any) => {
+        apiService.getProductData(apiQueryInfo).then((data:IKeyable) => {
             if(queryInfo.queryType === "products") {
-                setProducts(getProducts(d.data.slice(0, 50)));
+                setProducts(getProducts(data.slice(0, 50)));
             } else if(queryInfo.queryType === "product") {
-                setProduct(getProductWithEssentialProperties(d.data));
+                setProduct(getProductWithEssentialProperties(data));
             }
         }).catch(err => {
             console.error(err); // take actions depending on this error

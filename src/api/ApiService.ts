@@ -1,45 +1,64 @@
 import {ICredentials, IKeyable} from "type.common";
 
-const productsApiHost = 'https://fortnite-api.theapinetwork.com';
-const authApiHost = 'https://reqres.in';
+import apiConfig from "api/ApiConfig.json";
+
+interface IFetchConfig {
+    method: string,
+    headers: IKeyable,
+    body?: string
+}
 
 class ApiService {
-    apiHost = '';
+    private apiHost = '';
 
     constructor(queryType:string) {
         if (queryType === 'auth') {
-            this.apiHost = authApiHost + "/api/";
+            this.apiHost = apiConfig.host.authApiHost + "/api/";
         } else if (queryType === 'products') {
-            this.apiHost = productsApiHost + "/";
+            this.apiHost = apiConfig.host.productsApiHost + "/";
         }
     }
 
-    fetchItems(query:string) {
-        return fetch(this.getApiUrl(query))
+    public async getProductData(query:string):Promise<IKeyable> {
+        try {
+            const response = await this.fetchData(query, 'GET', null);
+            return response.data;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    public async authenticate(query:string, creds:ICredentials):Promise<IKeyable> {
+        try {
+            const response = await this.fetchData(query, 'POST', creds);
+            return response;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    private fetchData(reqQuery:string, reqMethod: string, reqData: IKeyable | null):Promise<IKeyable> {
+        let apiUrl = this.getApiUrl(reqQuery);
+        const config:IFetchConfig = {
+            method: reqMethod,
+            headers: {'Content-Type': 'application/json'},
+        }
+
+        if (reqData) config.body = JSON.stringify(reqData);
+
+        return fetch(apiUrl,config)
+            .then(this.processResponseStatus)
             .then(response => response.json())
             .catch(err => {throw err});
     }
 
-    authenticate(query:string, creds:ICredentials) {
-        return fetch(this.getApiUrl(query),{
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({email: creds.email, password: creds.password})
-        })
-        .then(this.processResponseStatus)
-        .then(response => response.json())
-        .catch(err => {throw err});
-    }
-
-    processResponseStatus(res:IKeyable):IKeyable {
+    private processResponseStatus(res:IKeyable):IKeyable {
         if (!res.ok) {
             throw new Error(res.statusText);
         }
         return res;
     }
-    getApiUrl(query:string):string {
+    private getApiUrl(query:string):string {
         return this.apiHost + query;
     }
 }
