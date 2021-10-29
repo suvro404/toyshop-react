@@ -8,7 +8,7 @@ import {IKeyable, ICredentials} from "type.global";
 
 function Auth() {
     const [authType, setAuthType] = useState('Log In');
-    const {setCredentials, setActionName, loading, setLoading, authMsg, showAuthResultModal} = useAuth();
+    const {setCredentials, setAuthAction, loading, setLoading, authMsg, showAuthResultModal} = useAuth();
 
     const [userInput, setUserInput] = useReducer(
         (state:IKeyable, newState:IKeyable) => ({...state, ...newState}), {
@@ -30,7 +30,7 @@ function Auth() {
     function submit() {
         setLoading(true);
         setCredentials(userInput as ICredentials);
-        setActionName(getActionName(authType));
+        setAuthAction(getActionName(authType));
     }
 
 

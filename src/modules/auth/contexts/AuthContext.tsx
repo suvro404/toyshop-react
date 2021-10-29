@@ -1,17 +1,15 @@
 import {useState, createContext, useContext, FC, ReactNode} from 'react';
 import ApiService from 'api/ApiService';
-
 import {SetBooleanFunction, SetStringFunction, ICredentials} from 'type.global'
 import {SetCredentialsFunction} from 'modules/auth/types/auth.type'
-
 
 export interface ContextInterface {
     authorized: boolean,
     setAuthorized: SetBooleanFunction,
     credentials: ICredentials,
     setCredentials: SetCredentialsFunction,
-    actionName: string,
-    setActionName: SetStringFunction,
+    authAction: string,
+    setAuthAction: SetStringFunction,
     loading: boolean,
     setLoading: SetBooleanFunction,
     authMsg: string,
@@ -25,11 +23,11 @@ const AuthContext = createContext<ContextInterface | null>(null);
 export const AuthContextProvider: FC<ReactNode> = ({children}) => {
     const [authorized, setAuthorized] = useState(true);
     const [credentials, setCredentials] = useState({email: '', password: ''});
-    const [actionName, setActionName] = useState('login');
+    const [authAction, setAuthAction] = useState('login');
     const [loading, setLoading] = useState(false);
     const [authMsg, setAuthMsg] = useState('');
     const [showAuthResultModal, setShowAuthResultModal] = useState(false);
-    const providerValues:ContextInterface = {authorized, setAuthorized, credentials, setCredentials, actionName, setActionName, loading, setLoading, authMsg, setAuthMsg, showAuthResultModal, setShowAuthResultModal};
+    const providerValues:ContextInterface = {authorized, setAuthorized, credentials, setCredentials, authAction, setAuthAction, loading, setLoading, authMsg, setAuthMsg, showAuthResultModal, setShowAuthResultModal};
 
     return (
         <AuthContext.Provider value={providerValues}>
@@ -40,18 +38,18 @@ export const AuthContextProvider: FC<ReactNode> = ({children}) => {
 
 function authenticateUser(ctxValues:ContextInterface) {
     const apiService = new ApiService("auth");
-    apiService.authenticate(ctxValues.actionName, ctxValues.credentials).then(d => {
-        if(ctxValues.actionName === 'login') {
+    apiService.authenticate(ctxValues.authAction, ctxValues.credentials).then(d => {
+        if(ctxValues.authAction === 'login') {
             ctxValues.setAuthorized(true);
             ctxValues.setAuthMsg('Log in Successful!');
-        } else if(ctxValues.actionName === 'signup') {
+        } else if(ctxValues.authAction === 'signup') {
             ctxValues.setAuthMsg('Sign Up Successful. Please log in to continue.');
         }
     }).catch(err => {
         //console.log("Error : ", err);
-        if(ctxValues.actionName === 'login') {
+        if(ctxValues.authAction === 'login') {
             ctxValues.setAuthMsg('Log in Failed!');
-        } else if(ctxValues.actionName === 'signup') {
+        } else if(ctxValues.authAction === 'signup') {
             ctxValues.setAuthMsg('Sign Up Failed');
         }
     }).finally(() => {
