@@ -1,7 +1,7 @@
 import {FC} from 'react'
 import { useHistory } from "react-router-dom";
 import 'modules/products/styles/ProductListItem.css';
-import {IProduct} from "type.common"
+import {IProduct} from "type.global"
 
 const ProductListItem: FC<{product:IProduct}> = (props): JSX.Element => {
     const history = useHistory();

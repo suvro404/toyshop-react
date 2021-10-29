@@ -1,7 +1,7 @@
 import {useState, createContext, useContext, FC, ReactNode} from 'react';
 import ApiService from 'api/ApiService';
 
-import {SetBooleanFunction, SetStringFunction, ICredentials} from 'type.common'
+import {SetBooleanFunction, SetStringFunction, ICredentials} from 'type.global'
 import {SetCredentialsFunction} from 'modules/auth/types/auth.type'
 
 

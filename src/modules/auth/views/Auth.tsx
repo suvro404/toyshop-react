@@ -3,7 +3,7 @@ import 'modules/auth/styles/Auth.css';
 import {useAuth} from "modules/auth/contexts/AuthContext";
 import LoadingSpinner from "libs/loading-spinner/LoadingSpinner";
 import AuthResultModal from "modules/auth/components/AuthResultModal";
-import {IKeyable, ICredentials} from "type.common";
+import {IKeyable, ICredentials} from "type.global";
 
 
 function Auth() {

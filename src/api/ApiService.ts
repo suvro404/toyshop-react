@@ -1,4 +1,4 @@
-import {ICredentials, IKeyable} from "type.common";
+import {ICredentials, IKeyable} from "type.global";
 
 import apiConfig from "api/ApiConfig.json";
 

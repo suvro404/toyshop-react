@@ -11,8 +11,7 @@ interface MatchRouteParams {
 const ProductList: FC<RouteComponentProps<MatchRouteParams>> = (props): JSX.Element => {
     const productQueryInfo = {queryType: "products", queryData: props.match.params.type}
     const {products, loading} = useProducts(productQueryInfo);
-
-
+    
     return (
         <div>
             {

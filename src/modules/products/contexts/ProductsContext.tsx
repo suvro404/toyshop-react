@@ -1,9 +1,8 @@
-import React, {useState, createContext, useContext, useEffect, FC, ReactNode} from 'react';
+import {useState, createContext, useContext, useEffect, FC, ReactNode} from 'react';
 import ApiService from 'api/ApiService';
 
-import {SetBooleanFunction, IProduct, IKeyable} from 'type.common';
+import {SetBooleanFunction, IProduct, IKeyable} from 'type.global';
 import {SetProductQueryInfoFunction, SetProductsFunction, SetProductFunction, IProductQueryInfo} from 'modules/products/types/products.type'
-
 
 interface ContextInterface {
     products: Array<IProduct>,
@@ -12,31 +11,30 @@ interface ContextInterface {
     setProduct?: SetProductFunction,
     loading: boolean,
     setLoading?: SetBooleanFunction,
-    queryInfo: IProductQueryInfo
-    setQueryInfo: SetProductQueryInfoFunction
+    productQueryInfo?: IProductQueryInfo
+    setProductQueryInfo: SetProductQueryInfoFunction
 }
 
 const ProductsContext = createContext<ContextInterface | null>(null);
 
 export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
-    const [queryInfo, setQueryInfo] = useState<IProductQueryInfo>({queryType: 'products', queryData: 'trending'});
+    const [productQueryInfo, setProductQueryInfo] = useState<IProductQueryInfo>({queryType: 'products', queryData: 'trending'});
     const [products, setProducts] = useState<IProduct[]>([]);
     const [product, setProduct] = useState<Partial<IProduct>>({});
     const [loading, setLoading] = useState(false);
 
-    const providerValues:ContextInterface = {products, product, loading, queryInfo, setQueryInfo};
+    const providerValues:ContextInterface = {products, product, loading, setProductQueryInfo};
 
-    const apiQueryInfo = getApiQueryInfo(queryInfo);
+    const apiQueryInfo = getApiQueryInfo(productQueryInfo);
 
-    useEffect(() => {
+    const onLoadProductData = () => {
         setLoading(true);
-
         const apiService = new ApiService("products");
 
         apiService.getProductData(apiQueryInfo).then((data:IKeyable) => {
-            if(queryInfo.queryType === "products") {
+            if(productQueryInfo.queryType === "products") {
                 setProducts(getProducts(data.slice(0, 50)));
-            } else if(queryInfo.queryType === "product") {
+            } else if(productQueryInfo.queryType === "product") {
                 setProduct(getProductWithEssentialProperties(data));
             }
         }).catch(err => {
@@ -44,7 +42,11 @@ export const ProductsContextProvider: FC<ReactNode> = ({children}) => {
         }).finally(() => {
             setLoading(false);
         });
-    }, [apiQueryInfo, queryInfo.queryType, queryInfo.queryData]);
+    }
+
+    useEffect(() => {
+        onLoadProductData();
+    }, [apiQueryInfo, productQueryInfo.queryType, productQueryInfo.queryData]);
 
     return (
         <ProductsContext.Provider value={providerValues}>
@@ -105,8 +107,8 @@ function getProducts(sourceProducts:Array<IKeyable>):IProduct[] {
 export const useProducts = (queryInfo: IProductQueryInfo) => {
     let contextValues:ContextInterface | null = useContext<ContextInterface | null>(ProductsContext);
     useEffect(() => {
-        if(contextValues && contextValues.setQueryInfo) {
-            contextValues.setQueryInfo(queryInfo);
+        if(contextValues && contextValues.setProductQueryInfo) {
+            contextValues.setProductQueryInfo(queryInfo);
         }
     }, [queryInfo.queryData]);
     return contextValues as ContextInterface;

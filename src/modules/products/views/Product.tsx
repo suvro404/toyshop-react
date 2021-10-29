@@ -7,7 +7,7 @@ import WarningModal from "modules/auth/components/AuthWarningModal";
 import {useAuth} from "modules/auth/contexts/AuthContext"
 import {useProducts} from "modules/products/contexts/ProductsContext"
 import {useHistory} from "react-router-dom";
-import {IProduct} from "type.common"
+import {IProduct} from "type.global"
 
 interface MatchRouteParams {
     id: string;

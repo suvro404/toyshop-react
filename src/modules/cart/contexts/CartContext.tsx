@@ -1,5 +1,5 @@
 import {useState, createContext, useContext, FC, ReactNode} from 'react';
-import {IProduct} from 'type.common'
+import {IProduct} from 'type.global'
 import {ICartItem} from 'modules/cart/types/cart.type'
 
 type OnAddProductFunction = (product: IProduct, quantity: number) => void;
