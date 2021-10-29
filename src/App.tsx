@@ -6,6 +6,8 @@ import {CartContextProvider} from "modules/cart/contexts/CartContext";
 import {AuthContextProvider} from "modules/auth/contexts/AuthContext";
 
 import { appRoutes } from 'routes/routes-main';
+import {Suspense} from "react";
+import LoadingSpinner from 'libs/loading-spinner/LoadingSpinner';
 
 function App() {
     return (
@@ -15,9 +17,11 @@ function App() {
                     <Router>
                         <div className="App">
                             <Nav />
-                            <Switch>
-                                {appRoutes}
-                            </Switch>
+                            <Suspense fallback={<LoadingSpinner />}>
+                                <Switch>
+                                    {appRoutes}
+                                </Switch>
+                            </Suspense>
                         </div>
                     </Router>
                 </CartContextProvider>
