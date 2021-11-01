@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import {Link, useLocation } from "react-router-dom";
 import {useCart} from "modules/cart/contexts/CartContext";
 import {useAuth} from "modules/auth/contexts/AuthContext";
@@ -28,11 +28,11 @@ function Nav() {
     }
 
     useEffect(() => {
-        window.addEventListener('scroll', changeNavBgColor)
+        window.addEventListener('scroll', changeNavBgColor);
         return () => {
-            window.removeEventListener('scroll', changeNavBgColor)
+            window.removeEventListener('scroll', changeNavBgColor);
         }
-    }, []);
+    }, [window.scrollY]);
 
     return (
         <nav className={ transparentBg ? 'bg-transparent' : 'bg-regular' }>

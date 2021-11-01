@@ -21,9 +21,9 @@ export interface ContextInterface {
 const AuthContext = createContext<ContextInterface | null>(null);
 
 export const AuthContextProvider: FC<ReactNode> = ({children}) => {
-    const [authorized, setAuthorized] = useState(true);
+    const [authorized, setAuthorized] = useState(false);
     const [credentials, setCredentials] = useState({email: '', password: ''});
-    const [authAction, setAuthAction] = useState('login');
+    const [authAction, setAuthAction] = useState('');
     const [loading, setLoading] = useState(false);
     const [authMsg, setAuthMsg] = useState('');
     const [showAuthResultModal, setShowAuthResultModal] = useState(false);
@@ -64,8 +64,7 @@ function isValidCredentail(creds:ICredentials) {
 
 export const useAuth = () => {
     let contextValues:ContextInterface | null = useContext<ContextInterface | null>(AuthContext);
-
-    if(contextValues) {
+    if(contextValues?.authAction.length) {
         isValidCredentail(contextValues.credentials) ? authenticateUser(contextValues) : console.log("credential not valid");
     }
 
