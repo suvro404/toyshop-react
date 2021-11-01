@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import {Link, useLocation } from "react-router-dom";
 import {useCart} from "modules/cart/contexts/CartContext";
 import {useAuth} from "modules/auth/contexts/AuthContext";

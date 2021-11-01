@@ -9,7 +9,7 @@ import {IKeyable, ICredentials} from "type.global";
 function Auth() {
     const [authType, setAuthType] = useState('Log In');
     const {setCredentials, setAuthAction, loading, setLoading, authMsg, showAuthResultModal} = useAuth();
-
+    
     const [userInput, setUserInput] = useReducer(
         (state:IKeyable, newState:IKeyable) => ({...state, ...newState}), {
             email: '',

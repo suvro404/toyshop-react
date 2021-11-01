@@ -55,6 +55,7 @@ function authenticateUser(ctxValues:ContextInterface) {
     }).finally(() => {
         ctxValues.setLoading(false);
         ctxValues.setShowAuthResultModal(true);
+        ctxValues.setAuthAction("");
     });
 }
 
