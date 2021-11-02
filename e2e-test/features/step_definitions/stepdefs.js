@@ -1,8 +1,7 @@
 const assert = require("assert");
 const { Given, When, Then } = require("cucumber");
-let app = require("../../../src/app");
 
-Given("user is in auth page", function(givenDay) {
+Given("user is in auth page", function() {
   return "pending";
 });
 
