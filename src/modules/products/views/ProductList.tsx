@@ -13,7 +13,7 @@ const ProductList: FC<RouteComponentProps<MatchRouteParams>> = (props): JSX.Elem
     const {products, loading} = useProducts(productQueryInfo);
     
     return (
-        <div>
+        <div data-test="trending">
             {
                 loading ? (
                     <LoadingSpinner />

@@ -52,15 +52,23 @@ function Auth() {
                                     <div className="auth-form-item-container">
                                         <div className="auth-form-label">Email</div>
                                         <input type="email" name="email" className="auth-form-input" autoComplete="off"
-                                                value={userInput.email} onChange={handleUserInputChange} />
+                                                value={userInput.email} onChange={handleUserInputChange}
+                                                data-test="email"
+                                        />
                                     </div>
                                     <div className="auth-form-item-container">
                                         <div className="auth-form-label">Password</div>
                                         <input type="password" name="password" className="auth-form-input" autoComplete="off"
-                                                value={userInput.password} onChange={handleUserInputChange} />
+                                                value={userInput.password} onChange={handleUserInputChange}
+                                                data-test="password"
+                                        />
                                     </div>
                                     <div>
-                                        <button className="auth-form-action-btn" onClick={() => submit()}>SUBMIT</button>
+                                        <button className="auth-form-action-btn" onClick={() => submit()}
+                                            data-test="submit"
+                                        >
+                                            SUBMIT
+                                        </button>
                                     </div>
                                     {
                                         authType === 'Log In' ? (
