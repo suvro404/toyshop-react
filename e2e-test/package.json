@@ -1,0 +1,20 @@
+{
+  "name": "e2e-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js -f json:cucumber-report.json",
+    "report": "node report.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^8.0.0-rc.1",
+    "@types/chai": "^4.2.22",
+    "@types/cucumber": "^7.0.0",
+    "@types/puppeteer": "^5.4.4",
+    "chai": "^4.3.4",
+    "cucumber-html-reporter": "^5.5.0"
+  }
+}
